@@ -5,11 +5,11 @@ import { Pie as PieChart } from "react-chartjs-2";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const data = {
-  labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+  labels: ["Nay", "Aye"],
   datasets: [
     {
       label: "# of Votes",
-      data: [12, 19, 3, 5, 2, 3],
+      data: [2, 1],
       backgroundColor: [
         "rgba(255, 99, 132, 0.2)",
         "rgba(54, 162, 235, 0.2)",
@@ -26,11 +26,11 @@ export const data = {
         "rgba(153, 102, 255, 1)",
         "rgba(255, 159, 64, 1)",
       ],
-      borderWidth: 1,
+      borderWidth: 2,
     },
   ],
 };
 
-export function Pie() {
+export function Pie(props) {
   return <PieChart data={data} />;
 }

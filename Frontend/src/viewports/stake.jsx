@@ -14,13 +14,11 @@ import Chart from "../components/tradingChart";
 
 const stake = () => {
   return (
-    <div className="bg-[#191b2c] w-screen rounded-2xl rounded-b-none rounded-r-none p-8">
-      <div className="flex flex-col md:flex-row gap-x-8 gap-y-4">
-        <Widget />
-        <Widget />
-        <Widget />
-      </div>
-
+    <div className="bg-[#191b2c] rounded-2xl gap-y-4 rounded-b-none rounded-r-none p-8">
+      <div className="flex flex-col md:flex-row gap-x-8 gap-y-4"></div>
+      <Widget />
+      <Widget />
+      <Widget />
       <div className="flex flex-row absolute bottom-0 right-0 gap-3 p-5 border-[#4e5467] hide-on-height hide-on-width">
         <div className="bg-[#232734] hover:bg-[#34394d] p-[9px] rounded-md transition duration-300 ease-in-out cursor-pointer">
           <BsTwitterX className="cursor-pointer" size="24" color="white" />

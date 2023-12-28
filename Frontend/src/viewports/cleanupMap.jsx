@@ -15,7 +15,7 @@ import Chart from "../components/tradingChart";
 
 const cleanupMap = () => {
   return (
-    <div className="bg-[#191b2c] w-screen rounded-2xl rounded-b-none rounded-r-none">
+    <div className="bg-[#191b2c] overflow-y-hidden rounded-2xl rounded-b-none rounded-r-none">
       <div className="flex flex-row gap-x-8 h-screen">
         <Map />
       </div>
