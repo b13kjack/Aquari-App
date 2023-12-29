@@ -3,7 +3,7 @@ import React from "react";
 //Import Icons
 import { BiSolidWallet } from "react-icons/bi";
 
-const big = 1;
+const big = 2;
 
 const proposalDash = ({
   activePage,
