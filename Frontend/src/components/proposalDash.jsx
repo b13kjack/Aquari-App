@@ -34,7 +34,7 @@ const proposalDash = ({
             onClick={() => {}}
             className="flex flex-row gap-3 items-center ml-3 mt-2 select-none"
           >
-            <p className="font-semibold md:flex tracking-wider">Aye</p>
+            <p className="font-semibold md:flex tracking-wider">Yes</p>
           </button>
         </div>
         <div className="w-[170px] h-[55px] bg-[#7a1212] rounded-md text-center hover:bg-[#7d2121] transition duration-200 ease-in-out cursor-pointer">
@@ -42,7 +42,7 @@ const proposalDash = ({
             onClick={() => {}}
             className="flex flex-row gap-3 items-center ml-3 mt-2 select-none"
           >
-            <p className="font-semibold md:flex tracking-wider">Nay</p>
+            <p className="font-semibold md:flex tracking-wider">No</p>
           </button>
         </div>
       </div>

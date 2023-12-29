@@ -15,7 +15,7 @@ const votedDisplay = (item, index) => {
         {`${getVotesOfFunc[0][0].slice(0, 18)}`}
       </h1>
       <h1 className="flex flex-row min-h-[100px] 2xl:mt-[2px] ml-[80px] md:ml-[80px] lg:ml-[225px] xl:ml-[525px] 2xl:ml-[650px] items-center tracking-wider text-2xl lg:text-3xl font-bold text-white select-none justify-center">
-        {getVotesOfFunc[0][2] == true ? "Nay" : "Aye"}
+        {getVotesOfFunc[0][2] == true ? "No" : "Yes"}
       </h1>
     </div>
   );

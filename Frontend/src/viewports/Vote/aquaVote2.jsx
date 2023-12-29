@@ -394,7 +394,7 @@ const aquaVote = (props) => {
           <ProposalChart pieVotes={props.pieVotez} />
         </div>
         <h1 className="text-3xl font-semibold mt-16 tracking-wider">
-          Casted DAO Ballots
+          Casted Ballots
         </h1>
         {getVotesOfFunc.map((item, index) => {
           return <VotedDisplay index={index} getVotesOfFunc={getVotesOfFunc} />;

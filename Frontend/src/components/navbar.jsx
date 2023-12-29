@@ -412,7 +412,7 @@ const navbar = ({
   return (
     <div className="flex flex-row w-full bg-[#1d1f31] h-20 py-1.5 items-center border-gray-800 border-b ">
       <Logo />
-      <div className="ml-[600px] flex flex-row gap-4 cursor-pointer select-none ">
+      <div className="hidden absolute right-[250px] ml-[600px] md:flex flex-row gap-4 cursor-pointer select-none ">
         <div
           onClick={async () => {
             await startVote();
@@ -432,7 +432,7 @@ const navbar = ({
       </div>
 
       <div className="mb-[35px]">
-        <div className="absolute right-[95px] md:right-[35px] w-[45px] md:w-[170px] h-[40px] bg-[#00b351] rounded-md text-center hover:bg-[#2cc571] transition duration-200 ease-in-out cursor-pointer">
+        <div className="absolute right-[95px] md:right-[35px] w-[45px] md:w-[170px] h-[40px] bg-[#00b351] rounded-md text-center hover:bg-[#207445] transition duration-200 ease-in-out cursor-pointer">
           <button
             onClick={async () => {
               await connectMetamask();
