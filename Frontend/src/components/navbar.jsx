@@ -415,7 +415,7 @@ const navbar = ({
       <div className="hidden absolute right-[250px] ml-[600px] md:flex flex-row gap-4 cursor-pointer select-none ">
         <div
           onClick={async () => {
-            await startVote();
+            await startVote(true);
           }}
           className="flex rounded-lg w-[125px] h-[30px] bg-green-500 hover:bg-[#208040] transition duration-200 font-bold justify-center items-center tracking-wider"
         >
@@ -423,7 +423,7 @@ const navbar = ({
         </div>
         <div
           onClick={async () => {
-            await startVote();
+            await startVote(false);
           }}
           className="flex rounded-lg w-[125px] h-[30px] bg-red-600 hover:bg-[#7a2020] transition duration-200 font-bold justify-center items-center tracking-wider"
         >

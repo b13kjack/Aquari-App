@@ -58,10 +58,7 @@ export function Pie() {
           datasets: [
             {
               label: "# of Votes",
-              data: [
-                Number(getProposalsFunc[activePage][2]),
-                Number(getProposalsFunc[activePage][3]),
-              ],
+              data: [35, 27],
               backgroundColor: [
                 "rgba(255, 99, 132, 0.2)",
                 "rgba(54, 162, 235, 0.2)",
