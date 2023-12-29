@@ -1,9 +1,22 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { createContext, useContext } from "react";
+
+const ActiveContext = createContext(3);
+const ProposalContext = createContext({}); //Must Create Context to pass varibales down component tree
+const VoterContext = createContext({});
+const BlockchainContext = createContext({});
+
+export { ActiveContext };
+export { ProposalContext }; //Must Export Context To Use Outside of File
+export { VoterContext };
+export { BlockchainContext };
 
 // Import Components
 import Navbar from "../components/navbar.jsx";
+import { provider } from "../components/navbar.jsx";
 import Sidebar from "../components/sidebar.jsx";
+console.log("logging provider", provider);
 
 //Import Viewport Page
 import Swap from "../viewports/swap.jsx";
@@ -43,8 +56,6 @@ const home = () => {
           <AquaVote
             lolz={setPieVotes}
             getProposalsFunc={getProposalsFunc}
-            activePage={activePage}
-            setActivePage={setActivePage}
             selected={selected}
             setSelected={setSelected}
             jsx={jsx}
@@ -90,30 +101,50 @@ const home = () => {
 
   return (
     <>
-      <div className="flex  h-screen">
-        <div className="w-full fixed">
-          <Navbar
-            getProposalFunc={getProposalFunc}
-            setGetProposalFunc={setGetProposalFunc}
-            setGetProposalsFunc={setGetProposalsFunc}
-            setGetVotesOfFunc={setGetVotesOfFunc}
-          />
-        </div>
+      <BlockchainContext.Provider value={{ provider, setSelected }}>
+        <VoterContext.Provider value={{ getVotesOfFunc, setGetVotesOfFunc }}>
+          <ProposalContext.Provider
+            value={{
+              getProposalsFunc,
+              setGetProposalsFunc,
+              getProposalFunc,
+              setGetProposalFunc,
+            }}
+          >
+            <ActiveContext.Provider value={{ activePage, setActivePage }}>
+              <div className="flex  h-screen">
+                <div className="w-full fixed">
+                  <Navbar
+                    activePage={activePage}
+                    getProposalFunc={getProposalFunc}
+                    setGetProposalFunc={setGetProposalFunc}
+                    setGetProposalsFunc={setGetProposalsFunc}
+                    setGetVotesOfFunc={setGetVotesOfFunc}
+                  />
+                </div>
 
-        <div className="h-full overflow-auto flex-row">
-          {/* Menu Bar */}
-          <Sidebar selected={selected} setSelected={setSelected} jsx={jsx} />
-        </div>
+                <div className="h-full overflow-auto flex-row">
+                  {/* Menu Bar */}
+                  <Sidebar
+                    selected={selected}
+                    setSelected={setSelected}
+                    jsx={jsx}
+                  />
+                </div>
 
-        <div className="flex-1 flex flex-col overflow-y-auto mt-[79px] ">
-          {/* Viewport (Route Pages Here) */}
-          {/* <div className="">
+                <div className="flex-1 flex flex-col overflow-y-auto mt-[79px] ">
+                  {/* Viewport (Route Pages Here) */}
+                  {/* <div className="">
             <Navbar />
           </div> */}
 
-          {jsx}
-        </div>
-      </div>
+                  {jsx}
+                </div>
+              </div>
+            </ActiveContext.Provider>
+          </ProposalContext.Provider>
+        </VoterContext.Provider>
+      </BlockchainContext.Provider>
     </>
   );
 };

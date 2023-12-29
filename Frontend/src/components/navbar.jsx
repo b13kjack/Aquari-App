@@ -12,12 +12,17 @@ import { BiSolidWallet } from "react-icons/bi";
 //Import Components
 import Logo from "./logo.jsx";
 import { FiZoomOut } from "react-icons/fi";
+import { ActiveContext } from "../pages/home.jsx";
+import Home from "../pages/home.jsx";
+
+import { VoterContext } from "../pages/home.jsx";
+import { useContext } from "react";
 
 // -------------Connect MetaMask & Get Wallet Balance ------------//
 //ANY EVM-BLOCKCHAIN
-let provider = new ethers.providers.Web3Provider(window.ethereum);
-let signer;
-let address;
+export let provider = new ethers.providers.Web3Provider(window.ethereum);
+export let signer;
+export let address;
 
 async function connectMetamask() {
   //Metamask requires requesting permission to connect users accounts
@@ -390,13 +395,42 @@ const navbar = ({
   setGetProposalsFunc,
   setGetVotesOfFunc,
 }) => {
-  //Push Blockchain Data to State
-  setGetProposalFunc(x);
-  setGetProposalsFunc(y);
-  setGetVotesOfFunc(z);
+  const activePage = useContext(ActiveContext);
+  console.log(activePage.activePage);
+  const startVote = async (param1) => {
+    const txResponse = await usdtContract
+      .connect(signer)
+      .performVote(activePage.activePage, param1);
+    await txResponse.wait();
+  };
+  useEffect(() => {
+    //Push Blockchain Data to State
+    setGetProposalFunc(x);
+    setGetProposalsFunc(y);
+    setGetVotesOfFunc(z);
+  }, [1]);
   return (
     <div className="flex flex-row w-full bg-[#1d1f31] h-20 py-1.5 items-center border-gray-800 border-b ">
       <Logo />
+      <div className="ml-[600px] flex flex-row gap-4 cursor-pointer select-none ">
+        <div
+          onClick={async () => {
+            await startVote();
+          }}
+          className="flex rounded-lg w-[125px] h-[30px] bg-green-500 hover:bg-[#208040] transition duration-200 font-bold justify-center items-center tracking-wider"
+        >
+          Yes Vote
+        </div>
+        <div
+          onClick={async () => {
+            await startVote();
+          }}
+          className="flex rounded-lg w-[125px] h-[30px] bg-red-600 hover:bg-[#7a2020] transition duration-200 font-bold justify-center items-center tracking-wider"
+        >
+          No Vote
+        </div>
+      </div>
+
       <div className="mb-[35px]">
         <div className="absolute right-[95px] md:right-[35px] w-[45px] md:w-[170px] h-[40px] bg-[#00b351] rounded-md text-center hover:bg-[#2cc571] transition duration-200 ease-in-out cursor-pointer">
           <button

@@ -1,4 +1,5 @@
 import React from "react";
+import Display from "../components/votedDisplay";
 
 //Import Icons
 import { BsInstagram } from "react-icons/bs";

@@ -52,6 +52,9 @@ const sidebar = ({ selected, setSelected, jsx }) => {
           className={
             selected === "AquaVote"
               ? "text-yellow-200 group-hover:text-yellow-200 transition duration-200 ease-in-out"
+              : "text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out" &&
+                selected === "AquaVote2"
+              ? "text-yellow-200 group-hover:text-yellow-200 transition duration-200 ease-in-out"
               : "text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out"
           }
         />
@@ -138,6 +141,34 @@ const sidebar = ({ selected, setSelected, jsx }) => {
                 <div className="border-white border-b-2"></div>
               </button>
             );
+          } else if (selected === "AquaVote2") {
+            console.log("We know that AquaVote2 Is the selected page");
+            if (item.name === "AquaVote") {
+              return (
+                <button className="group flex flex-row items-center gap-[11px] cursor-pointer bg-[#191b2c] rounded-l-2xl py-3 pl-[25px] select-none transition duration-200 ease-in-out">
+                  {item.icon}
+                  <h1 className="group font-bold text-yellow-200 group-hover:text-yellow-200 group:transition group:duration-200 ease-in-out">
+                    {item.name}
+                  </h1>
+                  <div className="border-white border-b-2"></div>
+                </button>
+              );
+            } else {
+              return (
+                <button
+                  onClick={() => {
+                    setSelected(item.name);
+                  }}
+                  className="group flex flex-row items-center gap-[11px] cursor-pointer py-3 pl-[25px] select-none transition duration-200 ease-in-out"
+                >
+                  {item.icon}
+                  <h1 className="group font-bold group-text-yellow-200 text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out">
+                    {item.name}
+                  </h1>
+                  <div className="border-white border-b-2"></div>
+                </button>
+              );
+            }
           } else {
             return (
               <button
@@ -160,7 +191,7 @@ const sidebar = ({ selected, setSelected, jsx }) => {
       <div className="absolute bottom-4 lg: ml-[25px] w-[200px] select-none profile-hide-on-height">
         <div className="flex flex-row items-center gap-3 mb-3">
           <img className="rounded-full h-[45px]" src={Maciej} />
-          <p className="text-white font-bold">Maciej Szczygieł</p>
+          <p className="text-white font-bold">Johnathan Smith</p>
         </div>
 
         <div className="border-[#4e5467] border-b-2"></div>

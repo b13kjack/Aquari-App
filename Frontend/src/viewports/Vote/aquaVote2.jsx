@@ -1,5 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { useContext } from "react";
+import { ActiveContext } from "../../pages/home";
+import { VoterContext } from "../../pages/home";
+import { ProposalContext } from "../../pages/home";
+import { BlockchainContext } from "../../pages/home";
 
 //Import Icons
 import { BsInstagram } from "react-icons/bs";
@@ -14,16 +19,371 @@ import Widget from "../../components/swapWidget";
 import ProposalDash from "../../components/proposalDash";
 import ProposalChart from "../../components/proposalChart";
 import VotedDisplay from "../../components/votedDisplay";
+import { provider } from "../../components/navbar";
+
+console.log("Captured Blockchain ProviderX", provider);
+
+// ------------- Reading Data From A Smart Contract ------------//
+//BNB CHAIN
+const AquariAddress = "0x061ee0Fa1a83c7c36DAdf3CD11fED07E530009a1";
+
+const usdtAbi = [
+  {
+    inputs: [
+      { internalType: "address", name: "_aquariToken", type: "address" },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  { inputs: [], name: "AccessControlBadConfirmation", type: "error" },
+  {
+    inputs: [
+      { internalType: "address", name: "account", type: "address" },
+      { internalType: "bytes32", name: "neededRole", type: "bytes32" },
+    ],
+    name: "AccessControlUnauthorizedAccount",
+    type: "error",
+  },
+  { inputs: [], name: "ReentrancyGuardReentrantCall", type: "error" },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "initiator",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "bytes32",
+        name: "role",
+        type: "bytes32",
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "message",
+        type: "string",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "proposalId",
+        type: "uint256",
+      },
+    ],
+    name: "Action",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "bytes32",
+        name: "role",
+        type: "bytes32",
+      },
+      {
+        indexed: true,
+        internalType: "bytes32",
+        name: "previousAdminRole",
+        type: "bytes32",
+      },
+      {
+        indexed: true,
+        internalType: "bytes32",
+        name: "newAdminRole",
+        type: "bytes32",
+      },
+    ],
+    name: "RoleAdminChanged",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "bytes32",
+        name: "role",
+        type: "bytes32",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "sender",
+        type: "address",
+      },
+    ],
+    name: "RoleGranted",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "bytes32",
+        name: "role",
+        type: "bytes32",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "sender",
+        type: "address",
+      },
+    ],
+    name: "RoleRevoked",
+    type: "event",
+  },
+  {
+    inputs: [],
+    name: "DEFAULT_ADMIN_ROLE",
+    outputs: [{ internalType: "bytes32", name: "", type: "bytes32" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "aquariToken",
+    outputs: [{ internalType: "contract IERC20", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "string", name: "title", type: "string" },
+      { internalType: "string", name: "description", type: "string" },
+    ],
+    name: "createProposal",
+    outputs: [
+      {
+        components: [
+          { internalType: "uint256", name: "id", type: "uint256" },
+          { internalType: "uint256", name: "duration", type: "uint256" },
+          { internalType: "uint256", name: "upvotes", type: "uint256" },
+          { internalType: "uint256", name: "downvotes", type: "uint256" },
+          { internalType: "string", name: "title", type: "string" },
+          { internalType: "string", name: "description", type: "string" },
+          { internalType: "bool", name: "passed", type: "bool" },
+          { internalType: "address", name: "proposer", type: "address" },
+        ],
+        internalType: "struct AquariGovernance.ProposalStruct",
+        name: "",
+        type: "tuple",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "proposalId", type: "uint256" }],
+    name: "getProposal",
+    outputs: [
+      {
+        components: [
+          { internalType: "uint256", name: "id", type: "uint256" },
+          { internalType: "uint256", name: "duration", type: "uint256" },
+          { internalType: "uint256", name: "upvotes", type: "uint256" },
+          { internalType: "uint256", name: "downvotes", type: "uint256" },
+          { internalType: "string", name: "title", type: "string" },
+          { internalType: "string", name: "description", type: "string" },
+          { internalType: "bool", name: "passed", type: "bool" },
+          { internalType: "address", name: "proposer", type: "address" },
+        ],
+        internalType: "struct AquariGovernance.ProposalStruct",
+        name: "",
+        type: "tuple",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getProposals",
+    outputs: [
+      {
+        components: [
+          { internalType: "uint256", name: "id", type: "uint256" },
+          { internalType: "uint256", name: "duration", type: "uint256" },
+          { internalType: "uint256", name: "upvotes", type: "uint256" },
+          { internalType: "uint256", name: "downvotes", type: "uint256" },
+          { internalType: "string", name: "title", type: "string" },
+          { internalType: "string", name: "description", type: "string" },
+          { internalType: "bool", name: "passed", type: "bool" },
+          { internalType: "address", name: "proposer", type: "address" },
+        ],
+        internalType: "struct AquariGovernance.ProposalStruct[]",
+        name: "props",
+        type: "tuple[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "bytes32", name: "role", type: "bytes32" }],
+    name: "getRoleAdmin",
+    outputs: [{ internalType: "bytes32", name: "", type: "bytes32" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getStakeholderVotes",
+    outputs: [{ internalType: "uint256[]", name: "", type: "uint256[]" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "proposalId", type: "uint256" }],
+    name: "getVotesOf",
+    outputs: [
+      {
+        components: [
+          { internalType: "address", name: "voter", type: "address" },
+          { internalType: "uint256", name: "timestamp", type: "uint256" },
+          { internalType: "bool", name: "choosen", type: "bool" },
+        ],
+        internalType: "struct AquariGovernance.VotedStruct[]",
+        name: "",
+        type: "tuple[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "bytes32", name: "role", type: "bytes32" },
+      { internalType: "address", name: "account", type: "address" },
+    ],
+    name: "grantRole",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "bytes32", name: "role", type: "bytes32" },
+      { internalType: "address", name: "account", type: "address" },
+    ],
+    name: "hasRole",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "proposalId", type: "uint256" },
+      { internalType: "bool", name: "choosen", type: "bool" },
+    ],
+    name: "performVote",
+    outputs: [
+      {
+        components: [
+          { internalType: "address", name: "voter", type: "address" },
+          { internalType: "uint256", name: "timestamp", type: "uint256" },
+          { internalType: "bool", name: "choosen", type: "bool" },
+        ],
+        internalType: "struct AquariGovernance.VotedStruct",
+        name: "",
+        type: "tuple",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "bytes32", name: "role", type: "bytes32" },
+      {
+        internalType: "address",
+        name: "callerConfirmation",
+        type: "address",
+      },
+    ],
+    name: "renounceRole",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "bytes32", name: "role", type: "bytes32" },
+      { internalType: "address", name: "account", type: "address" },
+    ],
+    name: "revokeRole",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "bytes4", name: "interfaceId", type: "bytes4" }],
+    name: "supportsInterface",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+];
+
+const usdtContract = new ethers.Contract(AquariAddress, usdtAbi, provider);
 
 const aquaVote = (props) => {
+  const { activePage } = useContext(ActiveContext);
+  const { setGetProposalFunc } = useContext(ProposalContext);
+  const { setGetProposalsFunc } = useContext(ProposalContext);
+  const { setGetVotesOfFunc } = useContext(VoterContext);
+  const { getVotesOfFunc } = useContext(VoterContext);
+  const { provider, setSelected } = useContext(BlockchainContext);
+
+  async function gatherData(param1) {
+    const x = await usdtContract.getProposal(param1);
+    const y = await usdtContract.getProposals();
+    const z = await usdtContract.getVotesOf(param1);
+
+    //Test to see if we can pull data from BSC
+    console.log(x);
+    console.log(y);
+    console.log(z);
+    console.log(y[0].description);
+
+    //Push Blockchain Data to State
+    // setGetProposalFunc(x);
+    // setGetProposalsFunc(y);
+
+    setGetVotesOfFunc(z);
+  }
+  gatherData(activePage);
   return (
     <div className="bg-[#191b2c] lg:h-full xl:h-full rounded-2xl rounded-b-none rounded-r-none p-10 overflow-x-hidden">
       <div className="flex flex-col gap-x-8 gap-y-8">
-        <h1 className="text-lg font-semibold cursor-pointer select-none tracking-wide">
+        <h1
+          onClick={() => {
+            setSelected("AquaVote");
+          }}
+          className="text-lg font-semibold cursor-pointer select-none tracking-wide"
+        >
           {"< Back to Proposal Select"}
         </h1>
         <h1 className="text-3xl font-semibold tracking-wider">
-          Aquari Governance Proposal #2
+          {`Aquari Governance Proposal #${activePage}`}
         </h1>
         <div className="flex flex-col xl:flex-row gap-y-8 xl:gap-x-8">
           <ProposalDash
@@ -36,7 +396,9 @@ const aquaVote = (props) => {
         <h1 className="text-3xl font-semibold mt-16 tracking-wider">
           Casted DAO Ballots
         </h1>
-        <VotedDisplay />
+        {getVotesOfFunc.map((item, index) => {
+          return <VotedDisplay index={index} getVotesOfFunc={getVotesOfFunc} />;
+        })}
       </div>
 
       {/* Social Media Icons */}
