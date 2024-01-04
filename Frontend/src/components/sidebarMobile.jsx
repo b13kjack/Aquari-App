@@ -26,7 +26,7 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
           className={
             selected === "Home"
               ? "text-yellow-200 group-hover:text-yellow-200 transition duration-200 ease-in-out"
-              : "text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out"
+              : "text-[#d0d3db] group-hover:text-yellow-200 transition duration-200 ease-in-out"
           }
         />
       ),
@@ -39,7 +39,7 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
           className={
             selected === "Swap"
               ? "text-yellow-200 group-hover:text-yellow-200 transition duration-200 ease-in-out"
-              : "text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out"
+              : "text-[#d0d3db] group-hover:text-yellow-200 transition duration-200 ease-in-out"
           }
         />
       ),
@@ -55,7 +55,7 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
               : "text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out" &&
                 selected === "AquaVote2"
               ? "text-yellow-200 group-hover:text-yellow-200 transition duration-200 ease-in-out"
-              : "text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out"
+              : "text-[#d0d3db] group-hover:text-yellow-200 transition duration-200 ease-in-out"
           }
         />
       ),
@@ -68,7 +68,7 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
           className={
             selected === "Stake"
               ? "text-yellow-200 group-hover:text-yellow-200 transition duration-200 ease-in-out"
-              : "text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out"
+              : "text-[#d0d3db] group-hover:text-yellow-200 transition duration-200 ease-in-out"
           }
         />
       ),
@@ -81,7 +81,7 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
           className={
             selected === "Cleanup Map"
               ? "text-yellow-200 group-hover:text-yellow-200 transition duration-200 ease-in-out"
-              : "text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out"
+              : "text-[#d0d3db] group-hover:text-yellow-200 transition duration-200 ease-in-out"
           }
         />
       ),
@@ -94,7 +94,7 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
           className={
             selected === "DAO Financials"
               ? "text-yellow-200 group-hover:text-yellow-200 transition duration-200 ease-in-out"
-              : "text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out"
+              : "text-[#d0d3db] group-hover:text-yellow-200 transition duration-200 ease-in-out"
           }
         />
       ),
@@ -107,7 +107,7 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
           className={
             selected === "Forum"
               ? "text-yellow-200 group-hover:text-yellow-200 transition duration-200 ease-in-out"
-              : "text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out"
+              : "text-[#d0d3db] group-hover:text-yellow-200 transition duration-200 ease-in-out"
           }
         />
       ),
@@ -120,7 +120,7 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
           className={
             selected === "Wiki"
               ? "text-yellow-200 group-hover:text-yellow-200 transition duration-200 ease-in-out"
-              : "text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out"
+              : "text-[#d0d3db] group-hover:text-yellow-200 transition duration-200 ease-in-out"
           }
         />
       ),
@@ -128,8 +128,8 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
   ];
 
   return (
-    <div className="hidden flex-col bg-[#1d1f31] w-[250px] flex-shrink-0 sm:flex mt-12">
-      <div className="flex flex-col mt-[34px]">
+    <div className="absolute z-10 overflow-y-hidden min-h-screen  min-w-full flex-col bg-[#191a31]">
+      <div className="flex flex-col mt-[95px]">
         {menuItems.map((item) => {
           if (item.name === selected) {
             return (
@@ -162,7 +162,7 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
                   className="group flex flex-row items-center gap-[11px] cursor-pointer py-3 pl-[25px] select-none transition duration-200 ease-in-out"
                 >
                   {item.icon}
-                  <h1 className="group font-bold group-text-yellow-200 text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out">
+                  <h1 className="group font-bold group-text-yellow-200 text-[#d0d3db] group-hover:text-yellow-200 transition duration-200 ease-in-out">
                     {item.name}
                   </h1>
                   <div className="border-white border-b-2"></div>
@@ -175,10 +175,10 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
                 onClick={() => {
                   setSelected(item.name);
                 }}
-                className="group flex flex-row items-center gap-[11px] cursor-pointer py-3 pl-[25px] select-none transition duration-200 ease-in-out"
+                className="group flex flex-row items-center text-md tracking-wide gap-[11px] cursor-pointer py-3 pl-[25px] select-none transition duration-200 ease-in-out"
               >
                 {item.icon}
-                <h1 className="group font-bold text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out">
+                <h1 className="group font-bold text-[#d0d3db] group-hover:text-yellow-200 transition duration-200 ease-in-out">
                   {item.name}
                 </h1>
                 <div className="border-white border-b-2"></div>
@@ -188,13 +188,13 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
         })}
       </div>
 
-      <div className="absolute bottom-4 lg: ml-[25px] w-[200px] select-none profile-hide-on-height">
+      <div className="absolute bottom-5 ml-[19px] w-[325px] select-none profile-hide-on-height">
         <div className="flex flex-row items-center gap-3 mb-3">
           <img className="rounded-full h-[45px]" src={Maciej} />
-          <p className="text-white font-bold">{connectedWallet.slice(0, 15)}</p>
+          <p className="text-white font-bold">{connectedWallet.slice(0, 21)}</p>
         </div>
 
-        <div className="border-[#4e5467] border-b-2"></div>
+        <div className="border-[#4e5467]  border-b-2"></div>
 
         <div className="flex flex-row mt-[10px] gap-2 cursor-pointer">
           <TbSettings

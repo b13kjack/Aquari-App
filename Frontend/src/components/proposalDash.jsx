@@ -17,7 +17,7 @@ const proposalDash = ({
   const { activePage } = useContext(ActiveContext);
   console.log(JSON.stringify(activePage, null, 2));
   return (
-    <div className="flex sm:w-[925px] xs:w-[925px] md:[925px] lg:w-[925px] w-full min-h-[300px] flex-initial flex-col h-full bg-[#1d1f31] rounded-2xl">
+    <div className="flex xl:min-w-[975px] xl:max-w-[975px] xs:min-w-[400px] min-w-[300px]  min-h-[300px] flex-initial flex-col h-full bg-[#1d1f31] rounded-2xl">
       <h1 className="text-2xl pt-7 pl-4 ml-6 font-semibold tracking-wider">
         {`${getProposalsFunc[activePage][4]}`}
       </h1>
@@ -29,22 +29,24 @@ const proposalDash = ({
         {`${getProposalsFunc[activePage][5]}`}
       </p>
       <div className="flex flex-row gap-8 p-12 mt-[-60px]">
-        <div className="w-[170px] h-[55px] bg-[#00b351] rounded-md text-center hover:bg-[#2cc571] transition duration-200 ease-in-out cursor-pointer">
-          <button
-            onClick={() => {}}
-            className="flex flex-row gap-3 items-center ml-3 mt-2 select-none"
-          >
-            <p className="font-semibold md:flex tracking-wider">Yes</p>
-          </button>
-        </div>
-        <div className="w-[170px] h-[55px] bg-[#7a1212] rounded-md text-center hover:bg-[#7d2121] transition duration-200 ease-in-out cursor-pointer">
-          <button
-            onClick={() => {}}
-            className="flex flex-row gap-3 items-center ml-3 mt-2 select-none"
-          >
-            <p className="font-semibold md:flex tracking-wider">No</p>
-          </button>
-        </div>
+        <button
+          onClick={async () => {
+            console.log("Yes Vote Clicked");
+            await startVote(true);
+          }}
+          className="flex justify-center items-center text-lg w-[170px] h-[55px] bg-[#00b351] rounded-md text-center tracking-wide hover:bg-[#1f7747] transition duration-200 ease-in-out cursor-pointer"
+        >
+          <p className="font-semibold md:flex tracking-wider">Yes</p>
+        </button>
+        <button
+          onClick={async () => {
+            console.log("No Vote Clicked");
+            await startVote(false);
+          }}
+          className="flex justify-center items-center text-lg w-[170px] h-[55px] bg-[#7a1212] rounded-md text-center tracking-wide hover:bg-[#531616] transition duration-200 ease-in-out cursor-pointer"
+        >
+          <p className="font-semibold md:flex tracking-wider">No</p>
+        </button>
       </div>
     </div>
   );

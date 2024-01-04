@@ -18,23 +18,51 @@ const home = () => {
       <div className="flex flex-row gap-x-8">Home Coming Soon</div>
 
       <div className="flex flex-row absolute bottom-0 right-0 gap-3 p-5 border-[#4e5467] hide-on-height hide-on-width">
-        <div className="bg-[#232734] hover:bg-[#34394d] p-[9px] rounded-md transition duration-300 ease-in-out cursor-pointer">
+        <div
+          onClick={() => {
+            window.open("https://twitter.com/AquariOfficial", "_blank");
+          }}
+          className="bg-[#232734] hover:bg-[#34394d] p-[9px] rounded-md transition duration-300 ease-in-out cursor-pointer"
+        >
           <BsTwitterX className="cursor-pointer" size="24" color="white" />
         </div>
 
-        <div className=" bg-[#232734] hover:bg-[#34394d] p-[9px] rounded-md transition duration-300 ease-in-out cursor-pointer">
+        <div
+          onClick={() => {
+            window.open("https://www.instagram.com/aquariofficial/", "_blank");
+          }}
+          className=" bg-[#232734] hover:bg-[#34394d] p-[9px] rounded-md transition duration-300 ease-in-out cursor-pointer"
+        >
           <BsInstagram className="cursor-pointer" size="24" color="white" />
         </div>
 
-        <div className=" bg-[#232734] hover:bg-[#34394d] p-[9px] rounded-md transition duration-300 ease-in-out cursor-pointer">
+        <div
+          onClick={() => {
+            window.open("https://www.facebook.com/AquariOfficial/", "_blank");
+          }}
+          className=" bg-[#232734] hover:bg-[#34394d] p-[9px] rounded-md transition duration-300 ease-in-out cursor-pointer"
+        >
           <BsFacebook className="cursor-pointer" size="24" color="white" />
         </div>
 
-        <div className=" bg-[#232734] hover:bg-[#34394d] p-[9px] rounded-md transition duration-300 ease-in-out cursor-pointer">
+        <div
+          onClick={() => {
+            window.open(
+              "https://www.linkedin.com/company/aquariofficial/",
+              "_blank"
+            );
+          }}
+          className=" bg-[#232734] hover:bg-[#34394d] p-[9px] rounded-md transition duration-300 ease-in-out cursor-pointer"
+        >
           <BsLinkedin className="cursor-pointer" size="24" color="white" />
         </div>
 
-        <div className=" bg-[#232734] hover:bg-[#34394d] p-[9px] rounded-md transition duration-300 ease-in-out cursor-pointer">
+        <div
+          onClick={() => {
+            window.open("https://t.me/aquariofficial", "_blank");
+          }}
+          className=" bg-[#232734] hover:bg-[#34394d] p-[9px] rounded-md transition duration-300 ease-in-out cursor-pointer"
+        >
           <FaTelegramPlane className="cursor-pointer" size="24" color="white" />
         </div>
       </div>

@@ -345,6 +345,9 @@ const usdtAbi = [
 
 const usdtContract = new ethers.Contract(AquariAddress, usdtAbi, provider);
 
+let signer;
+signer = await provider.getSigner();
+
 const aquaVote = (props) => {
   const { activePage } = useContext(ActiveContext);
   const { setGetProposalFunc } = useContext(ProposalContext);
@@ -353,24 +356,27 @@ const aquaVote = (props) => {
   const { getVotesOfFunc } = useContext(VoterContext);
   const { provider, setSelected } = useContext(BlockchainContext);
 
-  async function gatherData(param1) {
-    const x = await usdtContract.getProposal(param1);
-    const y = await usdtContract.getProposals();
-    const z = await usdtContract.getVotesOf(param1);
+  const startVote = async (param1) => {
+    const txResponse = await usdtContract
+      .connect(signer)
+      .performVote(activePage, param1);
+    await txResponse.wait();
+  };
 
-    //Test to see if we can pull data from BSC
-    console.log(x);
-    console.log(y);
-    console.log(z);
-    console.log(y[0].description);
+  useEffect(() => {
+    async function gatherData(param1) {
+      const x = await usdtContract.getProposal(param1);
+      const y = await usdtContract.getProposals();
+      const z = await usdtContract.getVotesOf(param1);
 
-    //Push Blockchain Data to State
-    // setGetProposalFunc(x);
-    // setGetProposalsFunc(y);
+      console.log(x, y, z, y[0].description);
 
-    setGetVotesOfFunc(z);
-  }
-  gatherData(activePage);
+      setGetVotesOfFunc(z);
+    }
+
+    gatherData(activePage);
+  }, [activePage, setGetVotesOfFunc]); // Dependencies array
+
   return (
     <div className="bg-[#191b2c] lg:h-full xl:h-full rounded-2xl rounded-b-none rounded-r-none p-10 overflow-x-hidden">
       <div className="flex flex-col gap-x-8 gap-y-8">
@@ -387,6 +393,7 @@ const aquaVote = (props) => {
         </h1>
         <div className="flex flex-col xl:flex-row gap-y-8 xl:gap-x-8">
           <ProposalDash
+            startVote={startVote}
             getProposalFunc={props.getProposalFunc}
             getProposalsFunc={props.getProposalsFunc}
             getVotesOfFunc={props.getVotesOfFunc}
@@ -396,9 +403,22 @@ const aquaVote = (props) => {
         <h1 className="text-3xl font-semibold mt-16 tracking-wider">
           Casted Ballots
         </h1>
-        {getVotesOfFunc.map((item, index) => {
-          return <VotedDisplay index={index} getVotesOfFunc={getVotesOfFunc} />;
-        })}
+        {getVotesOfFunc[0] ? (
+          getVotesOfFunc.map((item, index) => {
+            return (
+              <VotedDisplay
+                index={index}
+                getVotesOfFunc={props.getVotesOfFunc}
+              />
+            );
+          })
+        ) : (
+          <div className="flex justify-center items-center flex-row h-[100px] bg-[#1d1f31] rounded-2xl">
+            <h1 className="text-3xl font-thin tracking-wider">
+              No Votes Found
+            </h1>
+          </div>
+        )}
       </div>
 
       {/* Social Media Icons */}

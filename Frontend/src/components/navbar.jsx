@@ -8,6 +8,7 @@ import { BsFacebook } from "react-icons/bs";
 import { BsYoutube } from "react-icons/bs";
 import { HiMenu } from "react-icons/hi";
 import { BiSolidWallet } from "react-icons/bi";
+import { MdClose } from "react-icons/md";
 
 //Import Components
 import Logo from "./logo.jsx";
@@ -390,11 +391,15 @@ console.log(y[0].description);
 //----------------------------------------------------------------------------
 
 const navbar = ({
+  setConnectedWallet,
+  mobileNav,
+  setMobileNav,
   getProposalFunc, //Here for Testing
   setGetProposalFunc,
   setGetProposalsFunc,
   setGetVotesOfFunc,
 }) => {
+  const [walletConnected, setWalletConnected] = useState(false);
   const activePage = useContext(ActiveContext);
   console.log(activePage.activePage);
   const startVote = async (param1) => {
@@ -410,9 +415,9 @@ const navbar = ({
     setGetVotesOfFunc(z);
   }, [1]);
   return (
-    <div className="flex flex-row w-full bg-[#1d1f31] h-20 py-1.5 items-center border-gray-800 border-b ">
+    <div className="flex z-[200] flex-row w-full bg-[#1d1f31] h-20 py-1.5 items-center border-gray-800 border-b ">
       <Logo />
-      <div className="hidden absolute right-[250px] ml-[600px] md:flex flex-row gap-4 cursor-pointer select-none ">
+      {/* <div className="hidden absolute right-[250px] ml-[600px] md:flex flex-row gap-4 cursor-pointer select-none ">
         <div
           onClick={async () => {
             await startVote(true);
@@ -429,18 +434,32 @@ const navbar = ({
         >
           No Vote
         </div>
-      </div>
+      </div> */}
 
       <div className="mb-[35px]">
-        <div className="absolute right-[95px] md:right-[35px] w-[45px] md:w-[170px] h-[40px] bg-[#00b351] rounded-md text-center hover:bg-[#207445] transition duration-200 ease-in-out cursor-pointer">
+        <div
+          className={
+            walletConnected
+              ? "absolute right-[95px] md:right-[35px] w-[45px] md:w-[170px] h-[40px] bg-[#00b351] rounded-md text-center hover:bg-[#207445] transition duration-200 ease-in-out cursor-pointer"
+              : "absolute right-[95px] md:right-[35px] w-[45px] md:w-[170px] h-[40px] bg-[#858a87] rounded-md text-center hover:bg-[#505552] transition duration-200 ease-in-out cursor-pointer"
+          }
+        >
           <button
             onClick={async () => {
               await connectMetamask();
+              setConnectedWallet(address);
+              setWalletConnected(true);
             }}
             className="flex flex-row gap-3 items-center ml-3 mt-2 select-none"
           >
             <BiSolidWallet size={22} />
-            <p className="hidden font-semibold md:flex">Connect Wallet</p>
+            {!walletConnected ? (
+              <p className="hidden font-semibold md:flex">Connect Wallet</p>
+            ) : (
+              <p className="hidden font-semibold text-sm md:flex">
+                Wallet Connected
+              </p>
+            )}
           </button>
         </div>
         {/* <BsInstagram className="cursor-pointer" size="24" color="white" />
@@ -448,10 +467,23 @@ const navbar = ({
         <BsLinkedin className="cursor-pointer" size="24" color="white" />
         <BsYoutube className="cursor-pointer" size="30" color="white" /> */}
       </div>
-      <HiMenu
-        className="flex mt-[6px] absolute right-[40px] cursor-pointer md:hidden hover:text-yellow-100 transition duration-100 ease-in-out"
-        size="35"
-      />
+      {!mobileNav ? (
+        <HiMenu
+          onClick={() => {
+            mobileNav ? setMobileNav(false) : setMobileNav(true);
+          }}
+          className="flex mt-[6px] absolute right-[40px] cursor-pointer md:hidden hover:text-yellow-100 transition duration-100 ease-in-out"
+          size="35"
+        />
+      ) : (
+        <MdClose
+          onClick={() => {
+            mobileNav ? setMobileNav(false) : setMobileNav(true);
+          }}
+          className="flex mt-[6px] absolute right-[40px] cursor-pointer md:hidden hover:text-yellow-100 transition duration-100 ease-in-out"
+          size="38"
+        />
+      )}
     </div>
   );
 };

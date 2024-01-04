@@ -16,6 +16,7 @@ export { BlockchainContext };
 import Navbar from "../components/navbar.jsx";
 import { provider } from "../components/navbar.jsx";
 import Sidebar from "../components/sidebar.jsx";
+import SidebarMobile from "../components/sidebarMobile.jsx";
 console.log("logging provider", provider);
 
 //Import Viewport Page
@@ -32,16 +33,19 @@ import Wiki from "../viewports/wiki.jsx";
 const home = () => {
   //State for Active Blockchain Proposal
   const [activePage, setActivePage] = useState(0); //use this one
+  const [iterationState, setIterationState] = useState(0); //iteration counter for votedDisplay component
 
   //State for Naviagtion
   const [selected, setSelected] = useState("Home");
   const [jsx, setJsx] = useState(<Home />);
+  const [mobileNav, setMobileNav] = useState(false);
 
   //State for Pulled Blockchain Data
   const [getProposalFunc, setGetProposalFunc] = useState("N/A");
   const [getProposalsFunc, setGetProposalsFunc] = useState([]);
   const [getVotesOfFunc, setGetVotesOfFunc] = useState("N/A");
   const [pieVotes, setPieVotes] = useState(1);
+  const [connectedWallet, setConnectedWallet] = useState("Disconnected");
 
   useEffect(() => {
     switch (selected) {
@@ -113,8 +117,20 @@ const home = () => {
           >
             <ActiveContext.Provider value={{ activePage, setActivePage }}>
               <div className="flex  h-screen">
-                <div className="w-full fixed">
+                {mobileNav ? (
+                  <SidebarMobile
+                    connectedWallet={connectedWallet}
+                    selected={selected}
+                    setSelected={setSelected}
+                    jsx={jsx}
+                  />
+                ) : null}
+
+                <div className="w-full z-40 fixed">
                   <Navbar
+                    setConnectedWallet={setConnectedWallet}
+                    mobileNav={mobileNav}
+                    setMobileNav={setMobileNav}
                     activePage={activePage}
                     getProposalFunc={getProposalFunc}
                     setGetProposalFunc={setGetProposalFunc}
@@ -126,6 +142,7 @@ const home = () => {
                 <div className="h-full overflow-auto flex-row">
                   {/* Menu Bar */}
                   <Sidebar
+                    connectedWallet={connectedWallet}
                     selected={selected}
                     setSelected={setSelected}
                     jsx={jsx}

@@ -16,7 +16,7 @@ import ProposalUnit from "../../components/proposalUnit";
 const aquaVote = ({ lolz, getProposalsFunc, selected, setSelected, jsx }) => {
   const active = useContext(ActiveContext);
   return (
-    <div className="bg-[#191b2c] h-full lg:h-full xl:h-full rounded-2xl rounded-b-none rounded-r-none p-10">
+    <div className="bg-[#191b2c] h-full lg:h-full xl:h-full rounded-2xl rounded-b-none overflow-y-auto rounded-r-none p-10">
       <div className="flex flex-col gap-x-8 gap-y-8">
         <h1 className="text-3xl font-semibold">Select a Proposal</h1>
         {getProposalsFunc.map((item, index) => {
