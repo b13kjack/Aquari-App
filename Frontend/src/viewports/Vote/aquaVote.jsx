@@ -22,6 +22,7 @@ const aquaVote = ({ lolz, getProposalsFunc, selected, setSelected, jsx }) => {
         {getProposalsFunc.map((item, index) => {
           return (
             <ProposalUnit
+              key={index}
               index={index}
               selected={selected}
               setSelected={setSelected}

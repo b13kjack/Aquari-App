@@ -32,12 +32,12 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
       ),
     },
     {
-      name: "Swap",
+      name: "Trading",
       icon: (
         <IoIosSwap
           size="23px"
           className={
-            selected === "Swap"
+            selected === "Trading"
               ? "text-yellow-200 group-hover:text-yellow-200 transition duration-200 ease-in-out"
               : "text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out"
           }
@@ -130,10 +130,13 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
   return (
     <div className="hidden flex-col bg-[#1d1f31] w-[250px] flex-shrink-0 sm:flex mt-12">
       <div className="flex flex-col mt-[34px]">
-        {menuItems.map((item) => {
+        {menuItems.map((item, index) => {
           if (item.name === selected) {
             return (
-              <button className="group flex flex-row items-center gap-[11px] cursor-pointer bg-[#191b2c] rounded-l-2xl py-3 pl-[25px] select-none transition duration-200 ease-in-out">
+              <button
+                key={index}
+                className="group flex flex-row items-center gap-[11px] cursor-pointer bg-[#191b2c] rounded-l-2xl py-3 pl-[25px] select-none transition duration-200 ease-in-out"
+              >
                 {item.icon}
                 <h1 className="group font-bold text-yellow-200 group-hover:text-yellow-200 group:transition group:duration-200 ease-in-out">
                   {item.name}
@@ -145,7 +148,10 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
             console.log("We know that AquaVote2 Is the selected page");
             if (item.name === "AquaVote") {
               return (
-                <button className="group flex flex-row items-center gap-[11px] cursor-pointer bg-[#191b2c] rounded-l-2xl py-3 pl-[25px] select-none transition duration-200 ease-in-out">
+                <button
+                  key={index}
+                  className="group flex flex-row items-center gap-[11px] cursor-pointer bg-[#191b2c] rounded-l-2xl py-3 pl-[25px] select-none transition duration-200 ease-in-out"
+                >
                   {item.icon}
                   <h1 className="group font-bold text-yellow-200 group-hover:text-yellow-200 group:transition group:duration-200 ease-in-out">
                     {item.name}
@@ -156,6 +162,7 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
             } else {
               return (
                 <button
+                  key={index}
                   onClick={() => {
                     setSelected(item.name);
                   }}
@@ -172,6 +179,7 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
           } else {
             return (
               <button
+                key={index}
                 onClick={() => {
                   setSelected(item.name);
                 }}

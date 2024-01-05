@@ -32,12 +32,12 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
       ),
     },
     {
-      name: "Swap",
+      name: "Trading",
       icon: (
         <IoIosSwap
           size="23px"
           className={
-            selected === "Swap"
+            selected === "Trading"
               ? "text-yellow-200 group-hover:text-yellow-200 transition duration-200 ease-in-out"
               : "text-[#d0d3db] group-hover:text-yellow-200 transition duration-200 ease-in-out"
           }

@@ -21,9 +21,32 @@ import { useContext } from "react";
 
 // -------------Connect MetaMask & Get Wallet Balance ------------//
 //ANY EVM-BLOCKCHAIN
-export let provider = new ethers.providers.Web3Provider(window.ethereum);
+
+export let provider;
 export let signer;
 export let address;
+
+//Function to Check if Metamask is Initialized
+const isMetaMaskInstalled = () => {
+  console.log("Checking if Metamask is Installed");
+  return (
+    typeof window.ethereum !== "undefined" &&
+    window.ethereum.isMetaMask === true
+  );
+};
+
+if (isMetaMaskInstalled()) {
+  console.log("Metamask is Installed Trying to Get Metamask Provider");
+  provider = new ethers.providers.Web3Provider(window.ethereum);
+  console.log(
+    "Congratulations you Have Metamask, Metamask is your RPC Provider"
+  );
+} else {
+  provider = new ethers.providers.JsonRpcProvider("https://bscrpc.com");
+  console.log(
+    "You Need to Install Metamask for Full Functionality, Using Fallback Provider"
+  );
+}
 
 async function connectMetamask() {
   //Metamask requires requesting permission to connect users accounts
@@ -362,17 +385,45 @@ const usdtAbi = [
   },
 ];
 
-const usdtContract = new ethers.Contract(AquariAddress, usdtAbi, provider);
+const getUsdtInfo = (
+  setGetProposalsFunc,
+  setGetProposalFunc,
+  getProposalsFunc,
+  setGetVotesOfFunc
+) => {
+  useEffect(() => {
+    async function doStuff() {
+      const usdtContract = new ethers.Contract(
+        AquariAddress,
+        usdtAbi,
+        provider
+      );
 
-const x = await usdtContract.getProposal(2);
-const y = await usdtContract.getProposals();
-const z = await usdtContract.getVotesOf(2);
+      const x = await usdtContract.getProposal(2);
+      const y = await usdtContract.getProposals();
+      const z = await usdtContract.getVotesOf(2);
 
-//Test to see if we can pull data from BSC
-console.log(x);
-console.log(y);
-console.log(z);
-console.log(y[0].description);
+      //Push Blockchain Data to State
+      setGetProposalFunc(x);
+      setGetProposalsFunc(y);
+      setGetVotesOfFunc(z);
+
+      console.log("getProposalsFunc:", getProposalsFunc);
+
+      //Test to see if we can pull data from BSC
+      console.log(x);
+      console.log(y);
+      console.log(z);
+      console.log(y[0].description);
+    }
+    doStuff(
+      setGetProposalsFunc,
+      setGetVotesOfFunc,
+      setGetProposalFunc,
+      getProposalsFunc
+    );
+  }, [1]);
+};
 
 // const readDataFromAquari = async () => {
 //   const usdtContract = new ethers.Contract(AquariAddress, usdtAbi, provider);
@@ -395,6 +446,7 @@ const navbar = ({
   mobileNav,
   setMobileNav,
   getProposalFunc, //Here for Testing
+  getProposalsFunc,
   setGetProposalFunc,
   setGetProposalsFunc,
   setGetVotesOfFunc,
@@ -408,12 +460,19 @@ const navbar = ({
       .performVote(activePage.activePage, param1);
     await txResponse.wait();
   };
-  useEffect(() => {
-    //Push Blockchain Data to State
-    setGetProposalFunc(x);
-    setGetProposalsFunc(y);
-    setGetVotesOfFunc(z);
-  }, [1]);
+
+  getUsdtInfo(
+    setGetProposalsFunc,
+    setGetProposalFunc,
+    getProposalsFunc,
+    setGetVotesOfFunc
+  );
+  // useEffect(() => {
+  //   //Push Blockchain Data to State
+  //   setGetProposalFunc(x);
+  //   setGetProposalsFunc(y);
+  //   setGetVotesOfFunc(z);
+  // }, [1]);
   return (
     <div className="flex z-[200] flex-row w-full bg-[#1d1f31] h-20 py-1.5 items-center border-gray-800 border-b ">
       <Logo />

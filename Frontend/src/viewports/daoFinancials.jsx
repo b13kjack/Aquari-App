@@ -17,7 +17,7 @@ import { App } from "../components/lineChart";
 
 const daoFinancials = () => {
   return (
-    <div className="bg-[#191b2c] h-full rounded-2xl rounded-b-none rounded-r-none p-8">
+    <div className="bg-[#191b2c] min-h-screen max-h-screen rounded-2xl rounded-b-none rounded-r-none p-8">
       <div className="flex flex-col lg:flex-row gap-x-8 h-full">
         <div className="w-[425px] h-[300px]">
           <Pie />

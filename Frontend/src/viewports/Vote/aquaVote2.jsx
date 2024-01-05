@@ -407,6 +407,7 @@ const aquaVote = (props) => {
           getVotesOfFunc.map((item, index) => {
             return (
               <VotedDisplay
+                key={index}
                 index={index}
                 getVotesOfFunc={props.getVotesOfFunc}
               />

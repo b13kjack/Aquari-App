@@ -128,6 +128,7 @@ const home = () => {
 
                 <div className="w-full z-40 fixed">
                   <Navbar
+                    getProposalsFunc={getProposalsFunc}
                     setConnectedWallet={setConnectedWallet}
                     mobileNav={mobileNav}
                     setMobileNav={setMobileNav}
