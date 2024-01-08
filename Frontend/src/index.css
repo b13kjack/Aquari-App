@@ -30,6 +30,15 @@
   display: none;
 }
 
+.map-container {
+  touch-action: none;
+}
+
+.full-height {
+  height: 100vh;
+  height: 100svh;
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -43,5 +52,5 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 85%;
 }

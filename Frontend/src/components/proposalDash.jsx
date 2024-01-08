@@ -18,14 +18,14 @@ const proposalDash = ({
   console.log(JSON.stringify(activePage, null, 2));
   return (
     <div className="flex xl:min-w-[975px] xl:max-w-[975px] xs:min-w-[400px] min-w-[300px]  min-h-[300px] flex-initial flex-col h-full bg-[#1d1f31] rounded-2xl">
-      <h1 className="text-2xl pt-7 pl-4 ml-6 font-semibold tracking-wider">
+      <h1 className="text-2xl pt-7 pl-4 ml-[5px] sm:ml-6 font-semibold tracking-wider">
         {`${getProposalsFunc[activePage][4]}`}
       </h1>
-      <p className="text-lg ml-1 pl-11 pt-3 tracking-wider text-[#4e5467]">{`Proposer: ${getProposalsFunc[
+      <p className="text-lg ml-1 pl-6 sm:pl-11 pt-3 tracking-wider text-[#4e5467]">{`Proposer: ${getProposalsFunc[
         activePage
       ][7].slice(0, 18)}`}</p>
-      <div className="w-5/6 border border-b-2 border-[#4e5467] mt-6 ml-[60px]"></div>
-      <p className="p-12 pt-8 leading-9 tracking-wide">
+      <div className="w-5/6 border border-b-2 border-[#4e5467] mt-6 ml-[20px] sm:ml-[40px]"></div>
+      <p className="px-6 py-12 sm:px-12 pt-8 leading-9 tracking-wide">
         {`${getProposalsFunc[activePage][5]}`}
       </p>
       <div className="flex flex-row gap-8 p-12 mt-[-60px]">

@@ -16,7 +16,13 @@ import { IoChatboxOutline } from "react-icons/io5";
 //Import Images
 import Maciej from "../assets/maciej.jpeg";
 
-const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
+const sidebar = ({
+  setMobileNav,
+  selected,
+  setSelected,
+  jsx,
+  connectedWallet,
+}) => {
   const menuItems = [
     {
       name: "Home",
@@ -128,7 +134,7 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
   ];
 
   return (
-    <div className="absolute z-10 overflow-y-hidden min-h-screen  min-w-full flex-col bg-[#191a31]">
+    <div className="absolute z-10 overflow-y-hidden full-height  min-w-full flex-col bg-[#191a31]">
       <div className="flex flex-col mt-[95px]">
         {menuItems.map((item) => {
           if (item.name === selected) {
@@ -158,6 +164,7 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
                 <button
                   onClick={() => {
                     setSelected(item.name);
+                    setMobileNav(false);
                   }}
                   className="group flex flex-row items-center gap-[11px] cursor-pointer py-3 pl-[25px] select-none transition duration-200 ease-in-out"
                 >
@@ -174,6 +181,7 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
               <button
                 onClick={() => {
                   setSelected(item.name);
+                  setMobileNav(false);
                 }}
                 className="group flex flex-row items-center text-md tracking-wide gap-[11px] cursor-pointer py-3 pl-[25px] select-none transition duration-200 ease-in-out"
               >

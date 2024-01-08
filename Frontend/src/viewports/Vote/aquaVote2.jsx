@@ -1,4 +1,9 @@
 import React from "react";
+import { ethers } from "ethers";
+import {
+  useWeb3ModalProvider,
+  useWeb3ModalAccount,
+} from "@web3modal/ethers5/react";
 import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { ActiveContext } from "../../pages/home";
@@ -19,9 +24,12 @@ import Widget from "../../components/swapWidget";
 import ProposalDash from "../../components/proposalDash";
 import ProposalChart from "../../components/proposalChart";
 import VotedDisplay from "../../components/votedDisplay";
-import { provider } from "../../components/navbar";
+// import { provider } from "../../components/navbar";
+// import { signer } from "../../components/navbar";
 
-console.log("Captured Blockchain ProviderX", provider);
+let provider;
+let signer;
+// console.log("Captured Blockchain ProviderX", provider);
 
 // ------------- Reading Data From A Smart Contract ------------//
 //BNB CHAIN
@@ -343,23 +351,25 @@ const usdtAbi = [
   },
 ];
 
-const usdtContract = new ethers.Contract(AquariAddress, usdtAbi, provider);
-
-let signer;
-signer = await provider.getSigner();
-
 const aquaVote = (props) => {
   const { activePage } = useContext(ActiveContext);
   const { setGetProposalFunc } = useContext(ProposalContext);
   const { setGetProposalsFunc } = useContext(ProposalContext);
   const { setGetVotesOfFunc } = useContext(VoterContext);
   const { getVotesOfFunc } = useContext(VoterContext);
-  const { provider, setSelected } = useContext(BlockchainContext);
+  const { signer, provider, setSelected } = useContext(BlockchainContext);
+  const usdtContract = new ethers.Contract(AquariAddress, usdtAbi, provider);
+
+  const { walletProvider } = useWeb3ModalProvider();
+  // provider = new ethers.providers.Web3Provider(walletProvider);
+
+  // signer = async () => await provider.getSigner();
+  console.log("Captured Signer", signer);
 
   const startVote = async (param1) => {
     const txResponse = await usdtContract
       .connect(signer)
-      .performVote(activePage, param1);
+      .performVote(activePage, !param1);
     await txResponse.wait();
   };
 

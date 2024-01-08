@@ -11,13 +11,16 @@
   },
   "dependencies": {
     "@faker-js/faker": "^8.3.1",
+    "@types/mapbox-gl": "^2.7.19",
+    "@web3modal/ethers5": "^3.5.5",
     "chart.js": "^4.4.1",
+    "ethers": "^5.7.2",
     "mapbox-gl": "^3.0.1",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.12.0",
-    "react-map-gl": "^7.1.6",
+    "react-map-gl": "^7.1.7",
     "react-router-dom": "^6.21.0"
   },
   "devDependencies": {

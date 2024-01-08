@@ -15,10 +15,9 @@ import Chart from "../components/tradingChart";
 
 const cleanupMap = () => {
   return (
-    <div className="bg-[#191b2c] overflow-y-hidden rounded-2xl rounded-b-none rounded-r-none">
-      <div className="flex flex-row gap-x-8 h-screen">
-        <Map />
-      </div>
+    <div className="bg-[#191b2c] h-full w-full overflow-y-hidden rounded-2xl rounded-b-none rounded-r-none">
+      <Map />
+      {/* <div className="flex flex-row gap-x-8"></div> Put Map Component Back in Here to Test Zoom and Drag Recenter (Original Codebase) */}
 
       <div className="flex flex-row absolute bottom-0 right-0 gap-3 p-5 border-[#4e5467] map-hide-on-height hide-on-width">
         <div className="bg-[#232734] hover:bg-[#34394d] p-[9px] rounded-md transition duration-300 ease-in-out cursor-pointer">

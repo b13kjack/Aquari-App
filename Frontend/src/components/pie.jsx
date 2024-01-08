@@ -97,7 +97,7 @@ export function Pie() {
     );
   } else {
     return (
-      <h1 className="flex flex-1 items-center justify-center text-xl md:text-3xl">
+      <h1 className="flex flex-1 items-center justify-center tracking-wider text-xl md:text-2xl">
         No Blockchain Votes Registered
       </h1>
     );

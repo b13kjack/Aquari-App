@@ -1,5 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { useWeb3Modal, useDisconnect } from "@web3modal/ethers5/react";
+import {
+  useWeb3ModalProvider,
+  useWeb3ModalAccount,
+} from "@web3modal/ethers5/react";
+import { createWeb3Modal, defaultConfig } from "@web3modal/ethers5/react";
+import { ethers } from "ethers";
 
 //Import Icons
 import { BsInstagram } from "react-icons/bs";
@@ -24,7 +31,38 @@ import { useContext } from "react";
 
 export let provider;
 export let signer;
-export let address;
+export let addresz;
+
+//Configure Web3Modal
+// 1. Get projectId at https://cloud.walletconnect.com
+const projectId = "a7b50ca2e018b2e26a06f4c604d969f8";
+
+// 2. Set chains
+const mainnet = {
+  chainId: 56,
+  name: "BNB Chain",
+  currency: "BNB",
+  explorerUrl: "https://bscscan.com/",
+  rpcUrl: "https://bsc-dataseed1.binance.org/",
+};
+
+// 3. Create modal
+const metadata = {
+  name: "Aquari",
+  description: "Clean the World for Profit",
+  url: "https://aquari.org",
+  icons: ["https://avatars.mywebsite.com/"],
+};
+
+createWeb3Modal({
+  ethersConfig: defaultConfig({ metadata }),
+  chains: [mainnet],
+  projectId,
+});
+
+const { open } = useWeb3Modal();
+
+const handleConnectWallet = async () => {};
 
 //Function to Check if Metamask is Initialized
 const isMetaMaskInstalled = () => {
@@ -34,35 +72,40 @@ const isMetaMaskInstalled = () => {
     window.ethereum.isMetaMask === true
   );
 };
+provider = new ethers.providers.JsonRpcProvider("https://bscrpc.com");
 
 if (isMetaMaskInstalled()) {
   console.log("Metamask is Installed Trying to Get Metamask Provider");
-  provider = new ethers.providers.Web3Provider(window.ethereum);
+  // provider = new ethers.providers.Web3Provider(window.ethereum);
+  provider = new ethers.providers.JsonRpcProvider("https://bscrpc.com");
+
   console.log(
     "Congratulations you Have Metamask, Metamask is your RPC Provider"
   );
 } else {
   provider = new ethers.providers.JsonRpcProvider("https://bscrpc.com");
-  console.log(
-    "You Need to Install Metamask for Full Functionality, Using Fallback Provider"
-  );
 }
+// else {
+//   provider = new ethers.providers.JsonRpcProvider("https://bscrpc.com");
+//   console.log(
+//     "You Need to Install Metamask for Full Functionality, Using Fallback Provider"
+//   );
+// }
 
 async function connectMetamask() {
   //Metamask requires requesting permission to connect users accounts
-  await provider.send("eth_requestAccounts", []);
+  // await provider.send("eth_requestAccounts", []);
 
-  signer = await provider.getSigner();
+  // signer = await provider.getSigner();
 
-  address = await signer.getAddress();
+  if (isMetaMaskInstalled()) {
+    addresz = await signer.getAddress();
 
-  console.log("Account Address:", address);
-}
-
-async function getBalance() {
-  const balance = await signer.getBalance();
-  const convertToEth = 1e18;
-  console.log("Account Balance in Ether:", balance.toString() / convertToEth);
+    console.log("Metamask Account Address:", addresz);
+  } else {
+    // const { address, chainId, isConnected } = useWeb3ModalAccount();
+    // console.log("Web3Modeal Account Address:", address);
+  }
 }
 
 // ------------- Reading Data From A Smart Contract ------------//
@@ -442,6 +485,7 @@ const getUsdtInfo = (
 //----------------------------------------------------------------------------
 
 const navbar = ({
+  connectedWallet,
   setConnectedWallet,
   mobileNav,
   setMobileNav,
@@ -451,15 +495,42 @@ const navbar = ({
   setGetProposalsFunc,
   setGetVotesOfFunc,
 }) => {
+  const { walletProvider } = useWeb3ModalProvider();
+  const isConnected = useWeb3ModalAccount().isConnected;
+  if (isConnected) {
+    provider = new ethers.providers.Web3Provider(walletProvider);
+    signer = provider.getSigner();
+  } else {
+    provider = new ethers.providers.JsonRpcProvider("https://bscrpc.com");
+  }
+
   const [walletConnected, setWalletConnected] = useState(false);
   const activePage = useContext(ActiveContext);
   console.log(activePage.activePage);
+
   const startVote = async (param1) => {
     const txResponse = await usdtContract
       .connect(signer)
       .performVote(activePage.activePage, param1);
     await txResponse.wait();
   };
+
+  const { disconnect } = useDisconnect();
+
+  const address = useWeb3ModalAccount().address;
+
+  console.log("Alternative Way to Address", provider.listAccounts()[0]);
+
+  console.log("Web3 Modal Account:", useWeb3ModalAccount().address);
+  useEffect(() => {
+    if (isConnected) {
+      setWalletConnected(true);
+      setConnectedWallet(address);
+      console.log("(UseEffect) Web3 Modal Account Address: ", address);
+    } else if (connectedWallet == "Disconnected") {
+      setWalletConnected(false);
+    }
+  }, [address]);
 
   getUsdtInfo(
     setGetProposalsFunc,
@@ -505,9 +576,27 @@ const navbar = ({
         >
           <button
             onClick={async () => {
-              await connectMetamask();
-              setConnectedWallet(address);
-              setWalletConnected(true);
+              if (isMetaMaskInstalled() && !isConnected) {
+                // await connectMetamask();
+                await open();
+                setConnectedWallet(addresz);
+                setWalletConnected(true);
+                console.log(addresz);
+              } else if (isConnected) {
+                disconnect();
+                setWalletConnected(false);
+                setConnectedWallet("Disconnected");
+              } else {
+                await open().then(
+                  setTimeout(async () => {
+                    provider = new ethers.providers.Web3Provider(
+                      walletProvider
+                    );
+                    signer = await provider.getSigner();
+                    console.log(address);
+                  }, 1000)
+                );
+              }
             }}
             className="flex flex-row gap-3 items-center ml-3 mt-2 select-none"
           >
@@ -531,7 +620,7 @@ const navbar = ({
           onClick={() => {
             mobileNav ? setMobileNav(false) : setMobileNav(true);
           }}
-          className="flex mt-[6px] absolute right-[40px] cursor-pointer md:hidden hover:text-yellow-100 transition duration-100 ease-in-out"
+          className="flex mt-[6px] absolute right-[40px] cursor-pointer md:hidden transition duration-100 ease-in-out"
           size="35"
         />
       ) : (
@@ -539,12 +628,14 @@ const navbar = ({
           onClick={() => {
             mobileNav ? setMobileNav(false) : setMobileNav(true);
           }}
-          className="flex mt-[6px] absolute right-[40px] cursor-pointer md:hidden hover:text-yellow-100 transition duration-100 ease-in-out"
+          className="flex mt-[6px] absolute right-[40px] cursor-pointer md:hidden transition duration-100 ease-in-out"
           size="38"
         />
       )}
     </div>
   );
 };
+
+provider = navbar.provider;
 
 export default navbar;

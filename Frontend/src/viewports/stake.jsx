@@ -14,7 +14,7 @@ import Chart from "../components/tradingChart";
 
 const stake = () => {
   return (
-    <div className="bg-[#191b2c] rounded-2xl gap-y-4 rounded-b-none rounded-r-none p-8">
+    <div className="bg-[#191b2c] overflow-y-auto overflow-x-hidden  rounded-2xl gap-y-4 rounded-b-none rounded-r-none p-8">
       <div className="flex flex-col md:flex-row gap-x-8 gap-y-4"></div>
       <Widget />
       <Widget />

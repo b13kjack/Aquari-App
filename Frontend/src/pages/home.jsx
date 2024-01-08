@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { createContext, useContext } from "react";
+import ReactMapGL, { FullscreenControl } from "react-map-gl";
 
 const ActiveContext = createContext(3);
 const ProposalContext = createContext({}); //Must Create Context to pass varibales down component tree
@@ -14,7 +15,7 @@ export { BlockchainContext };
 
 // Import Components
 import Navbar from "../components/navbar.jsx";
-import { provider } from "../components/navbar.jsx";
+import { signer, provider } from "../components/navbar.jsx";
 import Sidebar from "../components/sidebar.jsx";
 import SidebarMobile from "../components/sidebarMobile.jsx";
 console.log("logging provider", provider);
@@ -50,7 +51,11 @@ const home = () => {
   useEffect(() => {
     switch (selected) {
       case "Swap":
-        setJsx(<Swap />);
+        setJsx(
+          <div className="">
+            <Swap />
+          </div>
+        );
         break;
       case "Home":
         setJsx(<Home />);
@@ -82,10 +87,29 @@ const home = () => {
         );
         break;
       case "Stake":
-        setJsx(<Stake />);
+        setJsx(
+          <div className="map-container">
+            <Stake />
+          </div>
+        );
         break;
       case "Cleanup Map":
-        setJsx(<CleanupMap />);
+        setJsx(
+          <div className="bg-[#191b2c] h-full w-full overflow-y-hidden  rounded-b-none map-container rounded-r-none">
+            <ReactMapGL
+              initialViewState={{
+                longitude: 0.1276,
+                latitude: 51.5072,
+                zoom: 4.4,
+              }}
+              // style={{ width: "100%", height: "100%" }}
+              mapStyle="mapbox://styles/dmastermind/clfn80l9800d201qiaud2dayd"
+              // mapStyle="mapbox://styles/mapbox/dark-v10"
+              mapboxAccessToken="pk.eyJ1IjoiZG1hc3Rlcm1pbmQiLCJhIjoiY2xmbjd0eHF5MGpuMTNycDYzZnZvY2NsNCJ9.vSsm8I_l-DQNPh0Q-vS0dQ"
+              //{...viewport}  -- for Applicaiton Controlled Map
+            ></ReactMapGL>
+          </div>
+        );
         break;
       case "DAO Financials":
         setJsx(<DAOFinancials />);
@@ -105,7 +129,7 @@ const home = () => {
 
   return (
     <>
-      <BlockchainContext.Provider value={{ provider, setSelected }}>
+      <BlockchainContext.Provider value={{ signer, provider, setSelected }}>
         <VoterContext.Provider value={{ getVotesOfFunc, setGetVotesOfFunc }}>
           <ProposalContext.Provider
             value={{
@@ -116,9 +140,10 @@ const home = () => {
             }}
           >
             <ActiveContext.Provider value={{ activePage, setActivePage }}>
-              <div className="flex  h-screen">
+              <div className="flex map-container full-height overflow-hidden">
                 {mobileNav ? (
                   <SidebarMobile
+                    setMobileNav={setMobileNav}
                     connectedWallet={connectedWallet}
                     selected={selected}
                     setSelected={setSelected}
@@ -129,6 +154,7 @@ const home = () => {
                 <div className="w-full z-40 fixed">
                   <Navbar
                     getProposalsFunc={getProposalsFunc}
+                    connectedWallet={connectedWallet}
                     setConnectedWallet={setConnectedWallet}
                     mobileNav={mobileNav}
                     setMobileNav={setMobileNav}
@@ -140,7 +166,7 @@ const home = () => {
                   />
                 </div>
 
-                <div className="h-full overflow-auto flex-row">
+                <div className="h-full flex-row">
                   {/* Menu Bar */}
                   <Sidebar
                     connectedWallet={connectedWallet}
@@ -150,7 +176,7 @@ const home = () => {
                   />
                 </div>
 
-                <div className="flex-1 flex flex-col overflow-y-auto mt-[79px] ">
+                <div className="flex-1 flex-grow flex flex-col map-container overflow-x-hidden mt-[60px] sm:mt-[79px]">
                   {/* Viewport (Route Pages Here) */}
                   {/* <div className="">
             <Navbar />

@@ -15,7 +15,7 @@ import Trading from "../components/tradingViewWidget";
 
 const swap = () => {
   return (
-    <div className="bg-[#071222] w-full min-h-full overflow-y-hidden  rounded-b-none  mb-[-30px] border-[#363a45] border-t-[2px] border-b-[3px]">
+    <div className="bg-[#071222] full-height overflow-y-hidden map-container  rounded-b-none border-[#363a45] border-t-[2px] border-b-[3px]">
       <Trading />
     </div>
   );

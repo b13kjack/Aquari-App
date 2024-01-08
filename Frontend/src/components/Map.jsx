@@ -1,5 +1,5 @@
 import React from "react";
-import ReactMapGL from "react-map-gl";
+import ReactMapGL, { FullscreenControl } from "react-map-gl";
 
 function Map() {
   const [viewport, setViewport] = React.useState({
@@ -10,18 +10,28 @@ function Map() {
     zoom: 8,
   });
 
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "scroll";
+    };
+  }, []);
+
   return (
     <ReactMapGL
       initialViewState={{
         longitude: 0.1276,
         latitude: 51.5072,
         zoom: 4.4,
+        asyncRender: true,
       }}
-      style={{ width: "100%", height: "100%" }}
+      // style={{ width: "100%", height: "100%" }}
       mapStyle="mapbox://styles/dmastermind/clfn80l9800d201qiaud2dayd"
       mapboxAccessToken="pk.eyJ1IjoiZG1hc3Rlcm1pbmQiLCJhIjoiY2xmbjd0eHF5MGpuMTNycDYzZnZvY2NsNCJ9.vSsm8I_l-DQNPh0Q-vS0dQ"
-      //{...viewport}
-    ></ReactMapGL>
+      //{...viewport}  -- for Applicaiton Controlled Map
+    >
+      <FullscreenControl position={"bottom-left"} />
+    </ReactMapGL>
   );
 }
 

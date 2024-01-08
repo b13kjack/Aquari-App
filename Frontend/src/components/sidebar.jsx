@@ -199,7 +199,9 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
       <div className="absolute bottom-4 lg: ml-[25px] w-[200px] select-none profile-hide-on-height">
         <div className="flex flex-row items-center gap-3 mb-3">
           <img className="rounded-full h-[45px]" src={Maciej} />
-          <p className="text-white font-bold">{connectedWallet.slice(0, 15)}</p>
+          <p className="text-white font-bold">
+            {connectedWallet ? connectedWallet.slice(0, 15) : "Disconnected"}
+          </p>
         </div>
 
         <div className="border-[#4e5467] border-b-2"></div>
