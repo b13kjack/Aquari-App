@@ -39,6 +39,12 @@
   height: 100svh;
 }
 
+@media (min-width: 640px) {
+  .xs\:flex {
+    dispaly: flex;
+  }
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -46,7 +52,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #1d1f31;
+  background-color: #191b2c;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;

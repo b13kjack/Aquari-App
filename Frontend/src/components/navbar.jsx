@@ -545,7 +545,7 @@ const navbar = ({
   //   setGetVotesOfFunc(z);
   // }, [1]);
   return (
-    <div className="flex z-[200] flex-row w-full bg-[#1d1f31] h-20 py-1.5 items-center border-gray-800 border-b ">
+    <div className="flex z-[200] pt-[6px] h-18 flex-row w-full bg-[#1d1f31] sm:h-20 py-1.5 items-center border-gray-800 border-b transition duration-200">
       <Logo />
       {/* <div className="hidden absolute right-[250px] ml-[600px] md:flex flex-row gap-4 cursor-pointer select-none ">
         <div

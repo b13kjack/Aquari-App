@@ -176,7 +176,7 @@ const home = () => {
                   />
                 </div>
 
-                <div className="flex-1 flex-grow flex flex-col map-container overflow-x-hidden mt-[60px] sm:mt-[79px]">
+                <div className="flex-1 flex-grow flex flex-col map-container overflow-x-hidden mt-[60px] sm:mt-[80px]">
                   {/* Viewport (Route Pages Here) */}
                   {/* <div className="">
             <Navbar />

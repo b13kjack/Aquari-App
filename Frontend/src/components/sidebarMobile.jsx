@@ -134,7 +134,7 @@ const sidebar = ({
   ];
 
   return (
-    <div className="absolute z-10 overflow-y-hidden full-height  min-w-full flex-col bg-[#191a31]">
+    <div className="absolute z-10 overflow-y-auto full-height  min-w-full flex-col bg-[#191a31]">
       <div className="flex flex-col mt-[95px]">
         {menuItems.map((item) => {
           if (item.name === selected) {
@@ -199,7 +199,9 @@ const sidebar = ({
       <div className="absolute bottom-5 ml-[19px] w-[325px] select-none profile-hide-on-height">
         <div className="flex flex-row items-center gap-3 mb-3">
           <img className="rounded-full h-[45px]" src={Maciej} />
-          <p className="text-white font-bold">{connectedWallet.slice(0, 21)}</p>
+          <p className="text-white font-bold">
+            {connectedWallet ? connectedWallet.slice(0, 21) : "Disconnected"}
+          </p>
         </div>
 
         <div className="border-[#4e5467]  border-b-2"></div>
