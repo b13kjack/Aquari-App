@@ -41,7 +41,7 @@
 
 @media (min-width: 640px) {
   .xs\:flex {
-    dispaly: flex;
+    display: flex;
   }
 }
 

@@ -128,7 +128,7 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
   ];
 
   return (
-    <div className="hidden flex-col bg-[#1d1f31] w-[250px] flex-shrink-0 md:flex mt-12">
+    <div className="hidden flex-col bg-[#1d1f31] w-[250px] full-height flex-shrink-0 md:flex mt-12">
       <div className="flex flex-col mt-[34px]">
         {menuItems.map((item, index) => {
           if (item.name === selected) {
