@@ -1,9 +1,6 @@
 import React from "react";
 import { ethers } from "ethers";
-import {
-  useWeb3ModalProvider,
-  useWeb3ModalAccount,
-} from "@web3modal/ethers5/react";
+import { useWeb3ModalProvider, useWeb3ModalAccount } from "@web3modal/ethers5/react";
 import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { ActiveContext } from "../../pages/home";
@@ -37,9 +34,7 @@ const AquariAddress = "0x061ee0Fa1a83c7c36DAdf3CD11fED07E530009a1";
 
 const usdtAbi = [
   {
-    inputs: [
-      { internalType: "address", name: "_aquariToken", type: "address" },
-    ],
+    inputs: [{ internalType: "address", name: "_aquariToken", type: "address" }],
     stateMutability: "nonpayable",
     type: "constructor",
   },
@@ -367,9 +362,7 @@ const aquaVote = (props) => {
   console.log("Captured Signer", signer);
 
   const startVote = async (param1) => {
-    const txResponse = await usdtContract
-      .connect(signer)
-      .performVote(activePage, !param1);
+    const txResponse = await usdtContract.connect(signer).performVote(activePage, param1);
     await txResponse.wait();
   };
 
@@ -388,19 +381,16 @@ const aquaVote = (props) => {
   }, [activePage, setGetVotesOfFunc]); // Dependencies array
 
   return (
-    <div className="bg-[#191b2c] lg:h-full xl:h-full rounded-2xl rounded-b-none rounded-r-none p-10 overflow-x-hidden">
+    <div className="bg-[#000] bg-opacity-40 lg:h-full xl:h-full rounded-2xl rounded-b-none rounded-r-none p-10 overflow-x-hidden">
       <div className="flex flex-col gap-x-8 gap-y-8">
         <h1
           onClick={() => {
             setSelected("AquaVote");
           }}
-          className="text-lg font-semibold cursor-pointer select-none tracking-wide"
-        >
+          className="text-lg font-semibold cursor-pointer select-none tracking-wide">
           {"< Back to Proposal Select"}
         </h1>
-        <h1 className="text-3xl font-semibold tracking-wider">
-          {`Aquari Governance Proposal #${activePage}`}
-        </h1>
+        <h1 className="text-3xl font-semibold tracking-wider">{`Aquari Governance Proposal #${activePage}`}</h1>
         <div className="flex flex-col xl:flex-row gap-y-8 xl:gap-x-8">
           <ProposalDash
             startVote={startVote}
@@ -410,9 +400,7 @@ const aquaVote = (props) => {
           />
           <ProposalChart pieVotes={props.pieVotez} />
         </div>
-        <h1 className="text-3xl font-semibold mt-16 tracking-wider">
-          Casted Ballots
-        </h1>
+        <h1 className="text-3xl font-semibold mt-16 tracking-wider">Casted Ballots</h1>
         {getVotesOfFunc[0] ? (
           getVotesOfFunc.map((item, index) => {
             return (
@@ -425,9 +413,7 @@ const aquaVote = (props) => {
           })
         ) : (
           <div className="flex justify-center items-center flex-row h-[100px] bg-[#1d1f31] rounded-2xl">
-            <h1 className="text-3xl font-thin tracking-wider">
-              No Votes Found
-            </h1>
+            <h1 className="text-3xl font-thin tracking-wider">No Votes Found</h1>
           </div>
         )}
       </div>
@@ -435,23 +421,43 @@ const aquaVote = (props) => {
       {/* Social Media Icons */}
       <div className="flex flex-row absolute bottom-0 right-0 gap-3 p-5 border-[#4e5467] hide-on-height hide-on-width">
         <div className="bg-[#232734] hover:bg-[#34394d] p-[9px] rounded-md transition duration-300 ease-in-out cursor-pointer">
-          <BsTwitterX className="cursor-pointer" size="24" color="white" />
+          <BsTwitterX
+            className="cursor-pointer"
+            size="24"
+            color="white"
+          />
         </div>
 
         <div className=" bg-[#232734] hover:bg-[#34394d] p-[9px] rounded-md transition duration-300 ease-in-out cursor-pointer">
-          <BsInstagram className="cursor-pointer" size="24" color="white" />
+          <BsInstagram
+            className="cursor-pointer"
+            size="24"
+            color="white"
+          />
         </div>
 
         <div className=" bg-[#232734] hover:bg-[#34394d] p-[9px] rounded-md transition duration-300 ease-in-out cursor-pointer">
-          <BsFacebook className="cursor-pointer" size="24" color="white" />
+          <BsFacebook
+            className="cursor-pointer"
+            size="24"
+            color="white"
+          />
         </div>
 
         <div className=" bg-[#232734] hover:bg-[#34394d] p-[9px] rounded-md transition duration-300 ease-in-out cursor-pointer">
-          <BsLinkedin className="cursor-pointer" size="24" color="white" />
+          <BsLinkedin
+            className="cursor-pointer"
+            size="24"
+            color="white"
+          />
         </div>
 
         <div className=" bg-[#232734] hover:bg-[#34394d] p-[9px] rounded-md transition duration-300 ease-in-out cursor-pointer">
-          <FaTelegramPlane className="cursor-pointer" size="24" color="white" />
+          <FaTelegramPlane
+            className="cursor-pointer"
+            size="24"
+            color="white"
+          />
         </div>
       </div>
     </div>

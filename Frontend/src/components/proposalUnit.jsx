@@ -16,8 +16,7 @@ const proposalUnit = (props) => {
         setActivePage(props.index);
         props.setSelected("AquaVote2");
       }}
-      className="sm:h-[100px] lg:h-[100px] bg-[#1d1f31] rounded-2xl hover:bg-[#34394d] transition duration-300 ease-in-out cursor-pointer"
-    >
+      className="sm:h-[100px] lg:h-[100px] bg-opacity-50 bg-[#1d1f31] rounded-2xl hover:bg-[#34394d] transition duration-300 ease-in-out cursor-pointer">
       <h1 className="flex flex-row min-h-[100px] text-xl text-center items-center justify-center ">
         {`Aquari Governance Proposal # ${props.index} `}
         {/* ${getProposalsFunc[props.index][4]  (Reinsert Above Whwen Ready for Proposal Titles)  */}

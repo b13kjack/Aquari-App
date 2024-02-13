@@ -23,11 +23,7 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
       icon: (
         <TiHomeOutline
           size="23px"
-          className={
-            selected === "Home"
-              ? "text-yellow-200 group-hover:text-yellow-200 transition duration-200 ease-in-out"
-              : "text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out"
-          }
+          className={selected === "Home" ? "text-yellow-200 group-hover:text-yellow-200 transition duration-200 ease-in-out" : "text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out"}
         />
       ),
     },
@@ -36,11 +32,7 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
       icon: (
         <IoIosSwap
           size="23px"
-          className={
-            selected === "Trading"
-              ? "text-yellow-200 group-hover:text-yellow-200 transition duration-200 ease-in-out"
-              : "text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out"
-          }
+          className={selected === "Trading" ? "text-yellow-200 group-hover:text-yellow-200 transition duration-200 ease-in-out" : "text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out"}
         />
       ),
     },
@@ -49,14 +41,7 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
       icon: (
         <MdOutlineHowToVote
           size="23px"
-          className={
-            selected === "AquaVote"
-              ? "text-yellow-200 group-hover:text-yellow-200 transition duration-200 ease-in-out"
-              : "text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out" &&
-                selected === "AquaVote2"
-              ? "text-yellow-200 group-hover:text-yellow-200 transition duration-200 ease-in-out"
-              : "text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out"
-          }
+          className={selected === "AquaVote" ? "text-yellow-200 group-hover:text-yellow-200 transition duration-200 ease-in-out" : "text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out" && selected === "AquaVote2" ? "text-yellow-200 group-hover:text-yellow-200 transition duration-200 ease-in-out" : "text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out"}
         />
       ),
     },
@@ -65,11 +50,7 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
       icon: (
         <FiLayers
           size="23px"
-          className={
-            selected === "Stake"
-              ? "text-yellow-200 group-hover:text-yellow-200 transition duration-200 ease-in-out"
-              : "text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out"
-          }
+          className={selected === "Stake" ? "text-yellow-200 group-hover:text-yellow-200 transition duration-200 ease-in-out" : "text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out"}
         />
       ),
     },
@@ -78,11 +59,7 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
       icon: (
         <FaRegMap
           size="23px"
-          className={
-            selected === "Cleanup Map"
-              ? "text-yellow-200 group-hover:text-yellow-200 transition duration-200 ease-in-out"
-              : "text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out"
-          }
+          className={selected === "Cleanup Map" ? "text-yellow-200 group-hover:text-yellow-200 transition duration-200 ease-in-out" : "text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out"}
         />
       ),
     },
@@ -91,11 +68,7 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
       icon: (
         <AiOutlineBank
           size="23px"
-          className={
-            selected === "DAO Financials"
-              ? "text-yellow-200 group-hover:text-yellow-200 transition duration-200 ease-in-out"
-              : "text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out"
-          }
+          className={selected === "DAO Financials" ? "text-yellow-200 group-hover:text-yellow-200 transition duration-200 ease-in-out" : "text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out"}
         />
       ),
     },
@@ -104,11 +77,7 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
       icon: (
         <IoChatboxOutline
           size="23px"
-          className={
-            selected === "Forum"
-              ? "text-yellow-200 group-hover:text-yellow-200 transition duration-200 ease-in-out"
-              : "text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out"
-          }
+          className={selected === "Forum" ? "text-yellow-200 group-hover:text-yellow-200 transition duration-200 ease-in-out" : "text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out"}
         />
       ),
     },
@@ -117,30 +86,23 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
       icon: (
         <BsQuestionCircle
           size="23px"
-          className={
-            selected === "Wiki"
-              ? "text-yellow-200 group-hover:text-yellow-200 transition duration-200 ease-in-out"
-              : "text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out"
-          }
+          className={selected === "Wiki" ? "text-yellow-200 group-hover:text-yellow-200 transition duration-200 ease-in-out" : "text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out"}
         />
       ),
     },
   ];
 
   return (
-    <div className="hidden flex-col bg-[#1d1f31] w-[250px] full-height flex-shrink-0 md:flex mt-12">
-      <div className="flex flex-col mt-[34px]">
+    <div className="hidden glassmorphism-sidebar flex-col bg-[#1d1f31]  w-[250px] h-full flex-shrink-0 md:flex mt-[32%] pt-[5px]">
+      <div className="flex flex-col ">
         {menuItems.map((item, index) => {
           if (item.name === selected) {
             return (
               <button
                 key={index}
-                className="group flex flex-row items-center gap-[11px] cursor-pointer bg-[#191b2c] rounded-l-2xl py-3 pl-[25px] select-none transition duration-200 ease-in-out"
-              >
+                className="group  flex flex-row items-center gap-[11px] cursor-pointer bg-[#191b2c] rounded-l-2xl py-3 pl-[25px] select-none transition duration-200 ease-in-out">
                 {item.icon}
-                <h1 className="group font-bold text-yellow-200 group-hover:text-yellow-200 group:transition group:duration-200 ease-in-out">
-                  {item.name}
-                </h1>
+                <h1 className="group font-bold text-yellow-200 group-hover:text-yellow-200 group:transition group:duration-200 ease-in-out">{item.name}</h1>
                 <div className="border-white border-b-2"></div>
               </button>
             );
@@ -150,12 +112,9 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
               return (
                 <button
                   key={index}
-                  className="group flex flex-row items-center gap-[11px] cursor-pointer bg-[#191b2c] rounded-l-2xl py-3 pl-[25px] select-none transition duration-200 ease-in-out"
-                >
+                  className="group flex flex-row items-center gap-[11px] cursor-pointer bg-[#191b2c] rounded-l-2xl py-3 pl-[25px] select-none transition duration-200 ease-in-out">
                   {item.icon}
-                  <h1 className="group font-bold text-yellow-200 group-hover:text-yellow-200 group:transition group:duration-200 ease-in-out">
-                    {item.name}
-                  </h1>
+                  <h1 className="group font-bold text-yellow-200 group-hover:text-yellow-200 group:transition group:duration-200 ease-in-out">{item.name}</h1>
                   <div className="border-white border-b-2"></div>
                 </button>
               );
@@ -166,12 +125,9 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
                   onClick={() => {
                     setSelected(item.name);
                   }}
-                  className="group flex flex-row items-center gap-[11px] cursor-pointer py-3 pl-[25px] select-none transition duration-200 ease-in-out"
-                >
+                  className="group flex flex-row items-center gap-[11px] cursor-pointer py-3 pl-[25px] select-none transition duration-200 ease-in-out">
                   {item.icon}
-                  <h1 className="group font-bold group-text-yellow-200 text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out">
-                    {item.name}
-                  </h1>
+                  <h1 className="group font-bold group-text-yellow-200 text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out">{item.name}</h1>
                   <div className="border-white border-b-2"></div>
                 </button>
               );
@@ -183,12 +139,9 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
                 onClick={() => {
                   setSelected(item.name);
                 }}
-                className="group flex flex-row items-center gap-[11px] cursor-pointer py-3 pl-[25px] select-none transition duration-200 ease-in-out"
-              >
+                className="group flex flex-row items-center gap-[11px] cursor-pointer py-3 pl-[25px] select-none transition duration-200 ease-in-out">
                 {item.icon}
-                <h1 className="group font-bold text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out">
-                  {item.name}
-                </h1>
+                <h1 className="group font-bold text-[#4e5467] group-hover:text-yellow-200 transition duration-200 ease-in-out">{item.name}</h1>
                 <div className="border-white border-b-2"></div>
               </button>
             );
@@ -196,12 +149,13 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
         })}
       </div>
 
-      <div className="absolute bottom-4 lg: ml-[25px] w-[200px] select-none profile-hide-on-height">
+      <div className="absolute bottom-[96px] ml-[25px] w-[200px] select-none profile-hide-on-height">
         <div className="flex flex-row items-center gap-3 mb-3">
-          <img className="rounded-full h-[45px]" src={Maciej} />
-          <p className="text-white font-bold">
-            {connectedWallet ? connectedWallet.slice(0, 15) : "Disconnected"}
-          </p>
+          <img
+            className="rounded-full h-[45px]"
+            src={Maciej}
+          />
+          <p className="text-white font-bold">{connectedWallet ? connectedWallet.slice(0, 15) : "Disconnected"}</p>
         </div>
 
         <div className="border-[#4e5467] border-b-2"></div>

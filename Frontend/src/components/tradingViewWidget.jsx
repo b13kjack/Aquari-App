@@ -6,8 +6,7 @@ function TradingViewWidget() {
 
   useEffect(() => {
     const script = document.createElement("script");
-    script.src =
-      "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
+    script.src = "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
     script.type = "text/javascript";
     script.async = true;
     script.innerHTML = `
@@ -19,7 +18,7 @@ function TradingViewWidget() {
           "style": "1",
           "locale": "en",
           "enable_publishing": false,
-          "backgroundColor": "rgba(7, 18, 34, 1)",
+          "backgroundColor": "rgba(9, 13, 24, 255)",
           "gridColor": "rgba(255, 0, 0, 0.06)",
           "hide_top_toolbar": true,
           "range": "12M",
@@ -32,18 +31,15 @@ function TradingViewWidget() {
     <div
       className="tradingview-widget-container"
       ref={container}
-      style={{ height: "100%", width: "100%" }}
-    >
+      style={{ height: "100%", width: "100%" }}>
       <div
         className="tradingview-widget-container__widget"
-        style={{ height: "calc(100% - 32px)", width: "100%" }}
-      ></div>
+        style={{ height: "calc(100% - 32px)", width: "100%" }}></div>
       <div className="tradingview-widget-copyright">
         <a
           href="https://www.tradingview.com/"
           rel="noopener nofollow"
-          target="_blank"
-        ></a>
+          target="_blank"></a>
       </div>
     </div>
   );

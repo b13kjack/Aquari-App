@@ -1,10 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useWeb3Modal, useDisconnect } from "@web3modal/ethers5/react";
-import {
-  useWeb3ModalProvider,
-  useWeb3ModalAccount,
-} from "@web3modal/ethers5/react";
+import { useWeb3ModalProvider, useWeb3ModalAccount } from "@web3modal/ethers5/react";
 import { createWeb3Modal, defaultConfig } from "@web3modal/ethers5/react";
 import { ethers } from "ethers";
 
@@ -67,10 +64,7 @@ const handleConnectWallet = async () => {};
 //Function to Check if Metamask is Initialized
 const isMetaMaskInstalled = () => {
   console.log("Checking if Metamask is Installed");
-  return (
-    typeof window.ethereum !== "undefined" &&
-    window.ethereum.isMetaMask === true
-  );
+  return typeof window.ethereum !== "undefined" && window.ethereum.isMetaMask === true;
 };
 provider = new ethers.providers.JsonRpcProvider("https://bscrpc.com");
 
@@ -79,9 +73,7 @@ if (isMetaMaskInstalled()) {
   // provider = new ethers.providers.Web3Provider(window.ethereum);
   provider = new ethers.providers.JsonRpcProvider("https://bscrpc.com");
 
-  console.log(
-    "Congratulations you Have Metamask, Metamask is your RPC Provider"
-  );
+  console.log("Congratulations you Have Metamask, Metamask is your RPC Provider");
 } else {
   provider = new ethers.providers.JsonRpcProvider("https://bscrpc.com");
 }
@@ -114,9 +106,7 @@ const AquariAddress = "0x061ee0Fa1a83c7c36DAdf3CD11fED07E530009a1";
 
 const usdtAbi = [
   {
-    inputs: [
-      { internalType: "address", name: "_aquariToken", type: "address" },
-    ],
+    inputs: [{ internalType: "address", name: "_aquariToken", type: "address" }],
     stateMutability: "nonpayable",
     type: "constructor",
   },
@@ -428,19 +418,10 @@ const usdtAbi = [
   },
 ];
 
-const getUsdtInfo = (
-  setGetProposalsFunc,
-  setGetProposalFunc,
-  getProposalsFunc,
-  setGetVotesOfFunc
-) => {
+const getUsdtInfo = (setGetProposalsFunc, setGetProposalFunc, getProposalsFunc, setGetVotesOfFunc) => {
   useEffect(() => {
     async function doStuff() {
-      const usdtContract = new ethers.Contract(
-        AquariAddress,
-        usdtAbi,
-        provider
-      );
+      const usdtContract = new ethers.Contract(AquariAddress, usdtAbi, provider);
 
       const x = await usdtContract.getProposal(2);
       const y = await usdtContract.getProposals();
@@ -459,12 +440,7 @@ const getUsdtInfo = (
       console.log(z);
       console.log(y[0].description);
     }
-    doStuff(
-      setGetProposalsFunc,
-      setGetVotesOfFunc,
-      setGetProposalFunc,
-      getProposalsFunc
-    );
+    doStuff(setGetProposalsFunc, setGetVotesOfFunc, setGetProposalFunc, getProposalsFunc);
   }, [1]);
 };
 
@@ -509,9 +485,7 @@ const navbar = ({
   console.log(activePage.activePage);
 
   const startVote = async (param1) => {
-    const txResponse = await usdtContract
-      .connect(signer)
-      .performVote(activePage.activePage, param1);
+    const txResponse = await usdtContract.connect(signer).performVote(activePage.activePage, param1);
     await txResponse.wait();
   };
 
@@ -532,12 +506,7 @@ const navbar = ({
     }
   }, [address]);
 
-  getUsdtInfo(
-    setGetProposalsFunc,
-    setGetProposalFunc,
-    getProposalsFunc,
-    setGetVotesOfFunc
-  );
+  getUsdtInfo(setGetProposalsFunc, setGetProposalFunc, getProposalsFunc, setGetVotesOfFunc);
   // useEffect(() => {
   //   //Push Blockchain Data to State
   //   setGetProposalFunc(x);
@@ -545,7 +514,7 @@ const navbar = ({
   //   setGetVotesOfFunc(z);
   // }, [1]);
   return (
-    <div className="flex z-[200] pt-[6px] h-18 flex-row w-full bg-[#1d1f31] sm:h-20 py-1.5 items-center border-gray-800 border-b transition duration-200">
+    <div className="flex glassmorphism-nav z-[200] sm:pt-[5px] pt-[0px] h-[59px] flex-row w-full bg-[#1d1f31] sm:h-[78px] py-1.5 items-center  shadow-md shadow-[#141627] transition duration-200">
       <Logo />
       {/* <div className="hidden absolute right-[250px] ml-[600px] md:flex flex-row gap-4 cursor-pointer select-none ">
         <div
@@ -567,13 +536,7 @@ const navbar = ({
       </div> */}
 
       <div className="mb-[35px]">
-        <div
-          className={
-            walletConnected
-              ? "absolute right-[95px] md:right-[35px] w-[45px] md:w-[170px] h-[40px] bg-[#00b351] rounded-md text-center hover:bg-[#207445] transition duration-200 ease-in-out cursor-pointer"
-              : "absolute right-[95px] md:right-[35px] w-[45px] md:w-[170px] h-[40px] bg-[#858a87] rounded-md text-center hover:bg-[#505552] transition duration-200 ease-in-out cursor-pointer"
-          }
-        >
+        <div className={walletConnected ? "absolute right-[95px] md:right-[35px] w-[45px] md:w-[170px] h-[40px] bg-[#00b351] rounded-md text-center hover:bg-[#207445] transition duration-200 ease-in-out cursor-pointer" : "absolute right-[95px] md:right-[35px] w-[45px] md:w-[170px] h-[40px] bg-[#858a87] rounded-md text-center hover:bg-[#505552] transition duration-200 ease-in-out cursor-pointer"}>
           <button
             onClick={async () => {
               if (isMetaMaskInstalled() && !isConnected) {
@@ -589,25 +552,16 @@ const navbar = ({
               } else {
                 await open().then(
                   setTimeout(async () => {
-                    provider = new ethers.providers.Web3Provider(
-                      walletProvider
-                    );
+                    provider = new ethers.providers.Web3Provider(walletProvider);
                     signer = await provider.getSigner();
                     console.log(address);
                   }, 1000)
                 );
               }
             }}
-            className="flex flex-row gap-3 items-center ml-3 mt-2 select-none"
-          >
+            className="flex flex-row gap-3 items-center ml-3 mt-2 select-none">
             <BiSolidWallet size={22} />
-            {!walletConnected ? (
-              <p className="hidden font-semibold md:flex">Connect Wallet</p>
-            ) : (
-              <p className="hidden font-semibold text-sm md:flex">
-                Wallet Connected
-              </p>
-            )}
+            {!walletConnected ? <p className="hidden font-semibold md:flex">Connect Wallet</p> : <p className="hidden font-semibold text-sm md:flex">Wallet Connected</p>}
           </button>
         </div>
         {/* <BsInstagram className="cursor-pointer" size="24" color="white" />

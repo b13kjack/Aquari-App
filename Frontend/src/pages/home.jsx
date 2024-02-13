@@ -3,6 +3,9 @@ import { useState, useEffect } from "react";
 import { createContext, useContext } from "react";
 import ReactMapGL, { FullscreenControl } from "react-map-gl";
 
+//Import Privy Wallet Provider
+import PrivyProviderB from "../providers/PrivyProviderB.jsx";
+
 const ActiveContext = createContext(3);
 const ProposalContext = createContext({}); //Must Create Context to pass varibales down component tree
 const VoterContext = createContext({});
@@ -22,7 +25,9 @@ console.log("logging provider", provider);
 
 //Import Viewport Page
 import Swap from "../viewports/swap.jsx";
-import Home from "../viewports/home.jsx";
+import BuyAquari from "../viewports/swapBog.jsx";
+import Home from "../viewports/Home/home.jsx";
+import HomeArticle from "../viewports/Home/homeArticle.jsx";
 import AquaVote from "../viewports/Vote/aquaVote.jsx";
 import AquaVote2 from "../viewports/Vote/aquaVote2.jsx";
 import Stake from "../viewports/stake.jsx";
@@ -35,6 +40,15 @@ const home = () => {
   //State for Active Blockchain Proposal
   const [activePage, setActivePage] = useState(0); //use this one
   const [iterationState, setIterationState] = useState(0); //iteration counter for votedDisplay component
+
+  //State for News Article Pages
+  const [newsObject, setNewsObject] = useState({
+    headline: "Error Downloading Article",
+    category: null,
+    image: null,
+    date: "N/A",
+    article_text: "Aquari Failed to Load the Article, Please Restart the App.",
+  });
 
   //State for Naviagtion
   const [selected, setSelected] = useState("Home");
@@ -58,7 +72,23 @@ const home = () => {
         );
         break;
       case "Home":
-        setJsx(<Home />);
+        setJsx(
+          <Home
+            setNewsObject={setNewsObject}
+            setSelected={setSelected}
+          />
+        );
+        break;
+      case "Buy Aquari":
+        setJsx(<BuyAquari setSelected={setSelected} />);
+        break;
+      case "HomeArticle":
+        setJsx(
+          <HomeArticle
+            newsObject={newsObject}
+            setSelected={setSelected}
+          />
+        );
         break;
       case "AquaVote":
         setJsx(
@@ -129,66 +159,65 @@ const home = () => {
 
   return (
     <>
-      <BlockchainContext.Provider value={{ signer, provider, setSelected }}>
-        <VoterContext.Provider value={{ getVotesOfFunc, setGetVotesOfFunc }}>
-          <ProposalContext.Provider
-            value={{
-              getProposalsFunc,
-              setGetProposalsFunc,
-              getProposalFunc,
-              setGetProposalFunc,
-            }}
-          >
-            <ActiveContext.Provider value={{ activePage, setActivePage }}>
-              <div className="flex map-container full-height overflow-hidden">
-                {mobileNav ? (
-                  <SidebarMobile
-                    setMobileNav={setMobileNav}
-                    connectedWallet={connectedWallet}
-                    selected={selected}
-                    setSelected={setSelected}
-                    jsx={jsx}
-                  />
-                ) : null}
+      <PrivyProviderB>
+        <BlockchainContext.Provider value={{ signer, provider, setSelected }}>
+          <VoterContext.Provider value={{ getVotesOfFunc, setGetVotesOfFunc }}>
+            <ProposalContext.Provider
+              value={{
+                getProposalsFunc,
+                setGetProposalsFunc,
+                getProposalFunc,
+                setGetProposalFunc,
+              }}>
+              <ActiveContext.Provider value={{ activePage, setActivePage }}>
+                <div className="flex map-container full-height overflow-hidden">
+                  {mobileNav ? (
+                    <SidebarMobile
+                      setMobileNav={setMobileNav}
+                      connectedWallet={connectedWallet}
+                      selected={selected}
+                      setSelected={setSelected}
+                      jsx={jsx}
+                    />
+                  ) : null}
 
-                <div className="w-full z-40 fixed">
-                  <Navbar
-                    getProposalsFunc={getProposalsFunc}
-                    connectedWallet={connectedWallet}
-                    setConnectedWallet={setConnectedWallet}
-                    mobileNav={mobileNav}
-                    setMobileNav={setMobileNav}
-                    activePage={activePage}
-                    getProposalFunc={getProposalFunc}
-                    setGetProposalFunc={setGetProposalFunc}
-                    setGetProposalsFunc={setGetProposalsFunc}
-                    setGetVotesOfFunc={setGetVotesOfFunc}
-                  />
+                  <div className="w-full z-40 fixed">
+                    <Navbar
+                      getProposalsFunc={getProposalsFunc}
+                      connectedWallet={connectedWallet}
+                      setConnectedWallet={setConnectedWallet}
+                      mobileNav={mobileNav}
+                      setMobileNav={setMobileNav}
+                      activePage={activePage}
+                      getProposalFunc={getProposalFunc}
+                      setGetProposalFunc={setGetProposalFunc}
+                      setGetProposalsFunc={setGetProposalsFunc}
+                      setGetVotesOfFunc={setGetVotesOfFunc}
+                    />
+                  </div>
+
+                  <div
+                    className="h-full
+                 flex-row">
+                    {/* Menu Bar */}
+                    <Sidebar
+                      connectedWallet={connectedWallet}
+                      selected={selected}
+                      setSelected={setSelected}
+                      jsx={jsx}
+                    />
+                  </div>
+
+                  <div className="flex-1 bg-[#090d18] bg-opacity-0 flex-grow flex flex-col map-container overflow-x-hidden mt-[60px] sm:mt-[80px]">
+                    {/* Viewport (Route Pages Here) */}
+                    {jsx}
+                  </div>
                 </div>
-
-                <div className="h-full flex-row">
-                  {/* Menu Bar */}
-                  <Sidebar
-                    connectedWallet={connectedWallet}
-                    selected={selected}
-                    setSelected={setSelected}
-                    jsx={jsx}
-                  />
-                </div>
-
-                <div className="flex-1 flex-grow flex flex-col map-container overflow-x-hidden mt-[60px] sm:mt-[80px]">
-                  {/* Viewport (Route Pages Here) */}
-                  {/* <div className="">
-            <Navbar />
-          </div> */}
-
-                  {jsx}
-                </div>
-              </div>
-            </ActiveContext.Provider>
-          </ProposalContext.Provider>
-        </VoterContext.Provider>
-      </BlockchainContext.Provider>
+              </ActiveContext.Provider>
+            </ProposalContext.Provider>
+          </VoterContext.Provider>
+        </BlockchainContext.Provider>
+      </PrivyProviderB>
     </>
   );
 };

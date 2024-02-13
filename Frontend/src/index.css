@@ -39,6 +39,31 @@
   height: 100svh;
 }
 
+.full-heightMobileNav {
+  height: 92vh;
+  height: 92svh;
+}
+
+.glassmorphism-sidebar {
+  backdrop-filter: blur(100px) saturate(100%) brightness(110%);
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.glassmorphism-nav {
+  backdrop-filter: blur(30px) saturate(100%) brightness(75%);
+  background-color: rgba(7, 12, 26, 0.568);
+}
+
+.shadowz {
+  opacity: 0.85;
+  box-shadow: 0 0 47px 0px #4c557093;
+}
+
+.stop-scrolling {
+  height: 100%;
+  overflow: hidden;
+}
+
 @media (min-width: 640px) {
   .xs\:flex {
     display: flex;
@@ -52,8 +77,10 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #191b2c;
-
+  background-image: url('/src/assets/focus.png');
+  /* background-color: #090d18; */
+  background-repeat: no-repeat;
+  background-size: cover;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

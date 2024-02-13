@@ -14,28 +14,48 @@ import Chart from "../components/tradingChart";
 
 const forum = () => {
   return (
-    <div className="bg-[#191b2c] h-full rounded-2xl rounded-b-none rounded-r-none p-8">
+    <div className="bg-[#090d18] h-full rounded-2xl rounded-b-none rounded-r-none p-8">
       <div className="flex flex-row gap-x-8">Forum Coming Soon</div>
 
       <div className="flex flex-row absolute bottom-0 right-0 gap-3 p-5 border-[#4e5467] hide-on-height hide-on-width">
         <div className="bg-[#232734] hover:bg-[#34394d] p-[9px] rounded-md transition duration-300 ease-in-out cursor-pointer">
-          <BsTwitterX className="cursor-pointer" size="24" color="white" />
+          <BsTwitterX
+            className="cursor-pointer"
+            size="24"
+            color="white"
+          />
         </div>
 
         <div className=" bg-[#232734] hover:bg-[#34394d] p-[9px] rounded-md transition duration-300 ease-in-out cursor-pointer">
-          <BsInstagram className="cursor-pointer" size="24" color="white" />
+          <BsInstagram
+            className="cursor-pointer"
+            size="24"
+            color="white"
+          />
         </div>
 
         <div className=" bg-[#232734] hover:bg-[#34394d] p-[9px] rounded-md transition duration-300 ease-in-out cursor-pointer">
-          <BsFacebook className="cursor-pointer" size="24" color="white" />
+          <BsFacebook
+            className="cursor-pointer"
+            size="24"
+            color="white"
+          />
         </div>
 
         <div className=" bg-[#232734] hover:bg-[#34394d] p-[9px] rounded-md transition duration-300 ease-in-out cursor-pointer">
-          <BsLinkedin className="cursor-pointer" size="24" color="white" />
+          <BsLinkedin
+            className="cursor-pointer"
+            size="24"
+            color="white"
+          />
         </div>
 
         <div className=" bg-[#232734] hover:bg-[#34394d] p-[9px] rounded-md transition duration-300 ease-in-out cursor-pointer">
-          <FaTelegramPlane className="cursor-pointer" size="24" color="white" />
+          <FaTelegramPlane
+            className="cursor-pointer"
+            size="24"
+            color="white"
+          />
         </div>
       </div>
     </div>

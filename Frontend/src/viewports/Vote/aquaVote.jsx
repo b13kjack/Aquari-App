@@ -16,14 +16,14 @@ import ProposalUnit from "../../components/proposalUnit";
 const aquaVote = ({ lolz, getProposalsFunc, selected, setSelected, jsx }) => {
   const active = useContext(ActiveContext);
   return (
-    <div className="bg-[#191b2c] h-full lg:h-full xl:h-full rounded-2xl rounded-b-none overflow-y-auto rounded-r-none p-10">
+    <div className="bg-[#000000] bg-opacity-40 h-full lg:h-full xl:h-full rounded-2xl rounded-b-none overflow-y-auto rounded-r-none p-10">
       <div className="flex flex-col gap-x-8 gap-y-8">
         <h1 className="text-3xl font-semibold">Select a Proposal</h1>
         {getProposalsFunc.map((item, index) => {
           return (
             <ProposalUnit
-              key={index}
-              index={index}
+              key={getProposalsFunc.length - 1 - index}
+              index={getProposalsFunc.length - 1 - index}
               selected={selected}
               setSelected={setSelected}
               jsx={jsx}
@@ -35,23 +35,43 @@ const aquaVote = ({ lolz, getProposalsFunc, selected, setSelected, jsx }) => {
       {/* Social Media Icons */}
       <div className="flex flex-row absolute bottom-0 right-0 gap-3 p-5 border-[#4e5467] hide-on-height hide-on-width">
         <div className="bg-[#232734] hover:bg-[#34394d] p-[9px] rounded-md transition duration-300 ease-in-out cursor-pointer">
-          <BsTwitterX className="cursor-pointer" size="24" color="white" />
+          <BsTwitterX
+            className="cursor-pointer"
+            size="24"
+            color="white"
+          />
         </div>
 
         <div className=" bg-[#232734] hover:bg-[#34394d] p-[9px] rounded-md transition duration-300 ease-in-out cursor-pointer">
-          <BsInstagram className="cursor-pointer" size="24" color="white" />
+          <BsInstagram
+            className="cursor-pointer"
+            size="24"
+            color="white"
+          />
         </div>
 
         <div className=" bg-[#232734] hover:bg-[#34394d] p-[9px] rounded-md transition duration-300 ease-in-out cursor-pointer">
-          <BsFacebook className="cursor-pointer" size="24" color="white" />
+          <BsFacebook
+            className="cursor-pointer"
+            size="24"
+            color="white"
+          />
         </div>
 
         <div className=" bg-[#232734] hover:bg-[#34394d] p-[9px] rounded-md transition duration-300 ease-in-out cursor-pointer">
-          <BsLinkedin className="cursor-pointer" size="24" color="white" />
+          <BsLinkedin
+            className="cursor-pointer"
+            size="24"
+            color="white"
+          />
         </div>
 
         <div className=" bg-[#232734] hover:bg-[#34394d] p-[9px] rounded-md transition duration-300 ease-in-out cursor-pointer">
-          <FaTelegramPlane className="cursor-pointer" size="24" color="white" />
+          <FaTelegramPlane
+            className="cursor-pointer"
+            size="24"
+            color="white"
+          />
         </div>
       </div>
     </div>
