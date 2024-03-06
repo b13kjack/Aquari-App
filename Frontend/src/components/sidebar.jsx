@@ -16,7 +16,7 @@ import { IoChatboxOutline } from "react-icons/io5";
 //Import Images
 import Maciej from "../assets/maciej.jpeg";
 
-const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
+const sidebar = ({ selected, setSelected, jsx, connectedWallet, embeddedWallet, linkedWallet, authenticated }) => {
   const menuItems = [
     {
       name: "Home",
@@ -93,7 +93,7 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
   ];
 
   return (
-    <div className="hidden glassmorphism-sidebar flex-col bg-[#1d1f31]  w-[250px] h-full flex-shrink-0 md:flex mt-[32%] pt-[5px]">
+    <div className={authenticated ? "hidden glassmorphism-sidebar flex-col bg-[#1d1f31]  w-[250px] h-full flex-shrink-0 md:flex mt-[32%] pt-[5px]" : "hidden"}>
       <div className="flex flex-col ">
         {menuItems.map((item, index) => {
           if (item.name === selected) {
@@ -155,7 +155,11 @@ const sidebar = ({ selected, setSelected, jsx, connectedWallet }) => {
             className="rounded-full h-[45px]"
             src={Maciej}
           />
-          <p className="text-white font-bold">{connectedWallet ? connectedWallet.slice(0, 15) : "Disconnected"}</p>
+          <div className="flex-col">
+            <p className={!authenticated ? "text-white font-bold" : "hidden"}>Disconnected</p>
+            <p className={embeddedWallet && authenticated ? "text-white font-bold" : "hidden"}>{embeddedWallet && authenticated ? embeddedWallet.address.slice(0, 15) : "Disconnected"}</p>
+            <p className={authenticated && linkedWallet ? "text-white font-bold opacity-100" : "hidden"}>{linkedWallet && authenticated ? linkedWallet.address.slice(0, 15) : "Disconnected"}</p>
+          </div>
         </div>
 
         <div className="border-[#4e5467] border-b-2"></div>

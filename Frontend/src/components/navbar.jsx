@@ -19,6 +19,7 @@ import Logo from "./logo.jsx";
 import { FiZoomOut } from "react-icons/fi";
 import { ActiveContext } from "../pages/home.jsx";
 import Home from "../pages/home.jsx";
+import SignIn from "../viewports/Home/signIn.jsx";
 
 import { VoterContext } from "../pages/home.jsx";
 import { useContext } from "react";
@@ -461,6 +462,16 @@ const getUsdtInfo = (setGetProposalsFunc, setGetProposalFunc, getProposalsFunc, 
 //----------------------------------------------------------------------------
 
 const navbar = ({
+  linkedWallet,
+  embeddedWallet,
+  setNewsObject,
+  setJsx,
+  setSelected,
+  selected,
+  ready,
+  authenticated, //Privy Authenticated
+  login, //Privy Login Function
+  logout, //Privy Logout Function
   connectedWallet,
   setConnectedWallet,
   mobileNav,
@@ -536,7 +547,37 @@ const navbar = ({
       </div> */}
 
       <div className="mb-[35px]">
-        <div className={walletConnected ? "absolute right-[95px] md:right-[35px] w-[45px] md:w-[170px] h-[40px] bg-[#00b351] rounded-md text-center hover:bg-[#207445] transition duration-200 ease-in-out cursor-pointer" : "absolute right-[95px] md:right-[35px] w-[45px] md:w-[170px] h-[40px] bg-[#858a87] rounded-md text-center hover:bg-[#505552] transition duration-200 ease-in-out cursor-pointer"}>
+        <div className={authenticated ? "absolute right-[95px] md:right-[35px] w-[45px] md:w-[170px] h-[40px] bg-[#00b351] rounded-md text-center hover:bg-[#207445] transition duration-200 ease-in-out cursor-pointer" : "absolute right-[40px] md:right-[35px] w-[45px] md:w-[170px] h-[40px] bg-[#858a87] rounded-md text-center hover:bg-[#505552] transition duration-200 ease-in-out cursor-pointer"}>
+          <button
+            className="flex flex-row gap-3 items-center ml-3 mt-2 select-none"
+            onClick={
+              !authenticated
+                ? () => {
+                    login();
+                  }
+                : () => {
+                    setJsx(
+                      <SignIn
+                        auth={authenticated} //Privy Authenticated
+                        login={login} //Privy Login
+                        logout={logout} //Privy Logout
+                        setSelected={setSelected}
+                        selected={selected}
+                        ready={ready}
+                        linkedWalletAddress={linkedWallet.address}
+                        embeddedWalletAddress={embeddedWallet.address}
+                        setNewsObject={setNewsObject}
+                      />
+                    );
+                    logout();
+                  }
+            }>
+            <BiSolidWallet size={22} />
+            {!authenticated ? <p className="hidden font-semibold md:flex">Connect Wallet</p> : <p className="hidden font-semibold text-sm md:flex">Wallet Connected</p>}
+          </button>
+        </div>
+
+        {/* <div className={walletConnected ? "absolute right-[95px] md:right-[35px] w-[45px] md:w-[170px] h-[40px] bg-[#00b351] rounded-md text-center hover:bg-[#207445] transition duration-200 ease-in-out cursor-pointer" : "absolute right-[95px] md:right-[35px] w-[45px] md:w-[170px] h-[40px] bg-[#858a87] rounded-md text-center hover:bg-[#505552] transition duration-200 ease-in-out cursor-pointer"}>
           <button
             onClick={async () => {
               if (isMetaMaskInstalled() && !isConnected) {
@@ -563,7 +604,7 @@ const navbar = ({
             <BiSolidWallet size={22} />
             {!walletConnected ? <p className="hidden font-semibold md:flex">Connect Wallet</p> : <p className="hidden font-semibold text-sm md:flex">Wallet Connected</p>}
           </button>
-        </div>
+        </div> */}
         {/* <BsInstagram className="cursor-pointer" size="24" color="white" />
         <BsFacebook className="cursor-pointer" size="24" color="white" />
         <BsLinkedin className="cursor-pointer" size="24" color="white" />
@@ -574,7 +615,7 @@ const navbar = ({
           onClick={() => {
             mobileNav ? setMobileNav(false) : setMobileNav(true);
           }}
-          className="flex mt-[6px] absolute right-[40px] cursor-pointer md:hidden transition duration-100 ease-in-out"
+          className={authenticated ? "flex mt-[6px] absolute right-[40px] cursor-pointer md:hidden transition duration-100 ease-in-out" : "hidden"}
           size="35"
         />
       ) : (
@@ -582,7 +623,7 @@ const navbar = ({
           onClick={() => {
             mobileNav ? setMobileNav(false) : setMobileNav(true);
           }}
-          className="flex mt-[6px] absolute right-[40px] cursor-pointer md:hidden transition duration-100 ease-in-out"
+          className={authenticated ? "flex mt-[6px] absolute right-[40px] cursor-pointer md:hidden transition duration-100 ease-in-out" : "hidden"}
           size="38"
         />
       )}

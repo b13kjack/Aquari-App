@@ -352,17 +352,17 @@ const aquaVote = (props) => {
   const { setGetProposalsFunc } = useContext(ProposalContext);
   const { setGetVotesOfFunc } = useContext(VoterContext);
   const { getVotesOfFunc } = useContext(VoterContext);
-  const { signer, provider, setSelected } = useContext(BlockchainContext);
+  const { privySigner, provider, setSelected } = useContext(BlockchainContext);
   const usdtContract = new ethers.Contract(AquariAddress, usdtAbi, provider);
 
   const { walletProvider } = useWeb3ModalProvider();
   // provider = new ethers.providers.Web3Provider(walletProvider);
 
   // signer = async () => await provider.getSigner();
-  console.log("Captured Signer", signer);
+  console.log("Captured Privy Signer", privySigner);
 
   const startVote = async (param1) => {
-    const txResponse = await usdtContract.connect(signer).performVote(activePage, param1);
+    const txResponse = await usdtContract.connect(privySigner).performVote(activePage, param1);
     await txResponse.wait();
   };
 

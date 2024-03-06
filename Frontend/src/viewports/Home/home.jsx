@@ -25,7 +25,7 @@ import Story6 from "../../assets/news/pepinstergroup.jpg";
 import Story7 from "../../assets/news/dadar.jpg";
 import Story8 from "../../assets/news/mumbai.jpg";
 
-const home = ({ setSelected, setNewsObject }) => {
+const home = ({ setSelected, setNewsObject, linkedWalletAddress, embeddedWalletAddress, ready, selected }) => {
   const newsList = [
     {
       headline: "Aquari Launches Revolutionary Blockchain Initiative to Restore Coral Reefs",
@@ -98,7 +98,12 @@ const home = ({ setSelected, setNewsObject }) => {
         <h1 className="text-3xl mt-3 md:mt-4 lg:mt-14 font-semibold tracking-wider">{`My Dashboard`}</h1>
         <p className="mt-2 text-lg tracking-normal text-slate-300">{Date().slice(0, 15)}</p>
 
-        <DashboardWidget />
+        <DashboardWidget
+          selected={selected}
+          ready={ready}
+          linkedWalletAddress={linkedWalletAddress}
+          embeddedWalletAddress={embeddedWalletAddress}
+        />
 
         <h1 className="text-3xl mt-[75px] font-semibold tracking-wider">Latest News</h1>
         <div className="flex mt-[35px] w-full gap-x-[25px] gap-y-4 flex-wrap">
@@ -108,6 +113,7 @@ const home = ({ setSelected, setNewsObject }) => {
                 setNewsObject={setNewsObject}
                 item={item}
                 setSelected={setSelected}
+                selected={selected}
               />
             );
           })}

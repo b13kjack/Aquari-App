@@ -1,20 +1,21 @@
 import React from "react";
+import { ethers } from "ethers";
 import { useState, useEffect } from "react";
 import { createContext, useContext } from "react";
 import ReactMapGL, { FullscreenControl } from "react-map-gl";
-
-//Import Privy Wallet Provider
-import PrivyProviderB from "../providers/PrivyProviderB.jsx";
+import { usePrivy, useWallets } from "@privy-io/react-auth";
 
 const ActiveContext = createContext(3);
 const ProposalContext = createContext({}); //Must Create Context to pass varibales down component tree
 const VoterContext = createContext({});
 const BlockchainContext = createContext({});
+const PrivyContext = createContext({});
 
 export { ActiveContext };
 export { ProposalContext }; //Must Export Context To Use Outside of File
 export { VoterContext };
 export { BlockchainContext };
+export { PrivyContext };
 
 // Import Components
 import Navbar from "../components/navbar.jsx";
@@ -35,8 +36,24 @@ import CleanupMap from "../viewports/cleanupMap.jsx";
 import DAOFinancials from "../viewports/daoFinancials.jsx";
 import Forum from "../viewports/forum.jsx";
 import Wiki from "../viewports/wiki.jsx";
+import SignIn from "../viewports/Home/signIn.jsx";
+
+//Global Variables
+let privySigner;
 
 const home = () => {
+  //Initalize Privy Wallets & State
+  const [embeddedWallet, setEmbeddedWallet] = useState("");
+  const [linkedWallet, setLinkedWallet] = useState("");
+  const [linkedWalletAddress, setLinkedWalletAddress] = useState("");
+  const [walletBalance, setWalletBalance] = useState("");
+  const { wallets } = useWallets();
+  const { user, login, logout, ready, authenticated } = usePrivy();
+
+  if (ready && authenticated) {
+    console.log("Privy is Online & Ready. User Logged In");
+  }
+
   //State for Active Blockchain Proposal
   const [activePage, setActivePage] = useState(0); //use this one
   const [iterationState, setIterationState] = useState(0); //iteration counter for votedDisplay component
@@ -51,8 +68,8 @@ const home = () => {
   });
 
   //State for Naviagtion
-  const [selected, setSelected] = useState("Home");
-  const [jsx, setJsx] = useState(<Home />);
+  const [selected, setSelected] = useState("Sign In");
+  const [jsx, setJsx] = useState(<SignIn />);
   const [mobileNav, setMobileNav] = useState(false);
 
   //State for Pulled Blockchain Data
@@ -61,6 +78,75 @@ const home = () => {
   const [getVotesOfFunc, setGetVotesOfFunc] = useState("N/A");
   const [pieVotes, setPieVotes] = useState(1);
   const [connectedWallet, setConnectedWallet] = useState("Disconnected");
+
+  //Privy Setup UseEffect (Load Wallet Provider and set Wallet States from Above)
+  useEffect(() => {
+    if (!ready || !authenticated) {
+      return;
+    } else {
+      setUp();
+    }
+    async function setUp() {
+      const embeddedWallet = wallets.find((wallet) => wallet.walletClientType === "privy");
+      //const linkedWalletz = wallets.find((wallet) => wallet.walletClientType === "metamask");
+      const linkedWalletz = wallets.find((wallet) => {
+        if (wallet.walletClientType === "metamask" || wallet.walletClientType === "trustwallet") {
+          return true;
+        }
+
+        if (wallet.walletInfo && wallet.walletInfo.hasOwnProperty("isTrustWallet") && wallet.walletInfo.isTrustWallet) {
+          return true;
+        }
+
+        return false;
+      });
+
+      if (embeddedWallet) {
+        const provider = await embeddedWallet.getEthereumProvider();
+
+        await provider.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: `0x38` }], //BNB Chain Mainnet
+        });
+        const ethProvider = new ethers.providers.Web3Provider(provider);
+        privySigner = ethProvider.getSigner();
+        const walletBalance = await ethProvider.getBalance(embeddedWallet.address);
+        const ethStringAmount = ethers.utils.formatEther(walletBalance);
+        setWalletBalance(ethStringAmount);
+        setEmbeddedWallet(embeddedWallet);
+        linkedWallet ? setLinkedWallet(linkedWalletz) : null;
+        linkedWallet ? setLinkedWalletAddress(linkedWalletz.address) : null;
+
+        console.log("Privy Embedded Wallet Address:", embeddedWallet);
+        console.log("Privy Embedded Wallet Balance:", ethStringAmount);
+        console.log("Privy Linked Wallet:", linkedWalletz);
+        console.log("PrivySigner Object:", privySigner);
+      }
+
+      if (!embeddedWallet) {
+        const provider = await linkedWalletz.getEthereumProvider();
+
+        await provider.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: `0x38` }], //BNB Chain Mainnet
+        });
+        const ethProvider = new ethers.providers.Web3Provider(provider);
+        privySigner = ethProvider.getSigner();
+        const walletBalance = await ethProvider.getBalance(linkedWalletz.address);
+        const ethStringAmount = ethers.utils.formatEther(walletBalance);
+        setWalletBalance(ethStringAmount);
+        setLinkedWallet(linkedWalletz);
+        setLinkedWalletAddress(linkedWalletz.address);
+
+        console.log("Privy Embedded Wallet Address:", embeddedWallet);
+
+        console.log("Privy Linked Wallet:", linkedWalletz);
+        console.log("Privy Linked Wallet Address:", linkedWalletz.address);
+        console.log("Privy Linked Wallet Balance:", ethStringAmount);
+        console.log("PrivySigner Object:", privySigner);
+      }
+    }
+  }, [wallets, ready]);
 
   useEffect(() => {
     switch (selected) {
@@ -72,10 +158,31 @@ const home = () => {
         );
         break;
       case "Home":
+        console.log("Case Home Linked:", linkedWallet.address);
+        console.log("Case Home Embedded:", embeddedWallet.address);
         setJsx(
           <Home
+            selected={selected}
+            ready={ready}
+            linkedWalletAddress={linkedWallet.address}
+            embeddedWalletAddress={embeddedWallet.address}
             setNewsObject={setNewsObject}
             setSelected={setSelected}
+          />
+        );
+        break;
+      case "Sign In":
+        setJsx(
+          <SignIn
+            auth={authenticated} //Privy Authenticated
+            login={login} //Privy Login
+            logout={logout} //Privy Logout
+            setSelected={setSelected}
+            selected={selected}
+            ready={ready}
+            linkedWalletAddress={linkedWallet.address}
+            embeddedWalletAddress={embeddedWallet.address}
+            setNewsObject={setNewsObject}
           />
         );
         break;
@@ -153,14 +260,26 @@ const home = () => {
       default:
         setJsx(<Swap />);
     }
-  }, [selected]); // This effect runs whenever 'selected' changes
+  }, [selected, linkedWallet]); // This effect runs whenever 'selected' changes
+
+  useEffect(() => {
+    //Change Page On SignIn
+    if (authenticated == true && selected == "Sign In") {
+      setSelected("Home");
+    }
+
+    if (authenticated == false && selected == "Home") {
+      console.log("Selected Set to Sign In");
+      setSelected("Sign In");
+    }
+  }, [authenticated, selected]);
 
   console.log(selected);
 
   return (
     <>
-      <PrivyProviderB>
-        <BlockchainContext.Provider value={{ signer, provider, setSelected }}>
+      <PrivyContext.Provider value={{ login, logout, ready, authenticated }}>
+        <BlockchainContext.Provider value={{ privySigner, provider, setSelected }}>
           <VoterContext.Provider value={{ getVotesOfFunc, setGetVotesOfFunc }}>
             <ProposalContext.Provider
               value={{
@@ -173,6 +292,9 @@ const home = () => {
                 <div className="flex map-container full-height overflow-hidden">
                   {mobileNav ? (
                     <SidebarMobile
+                      authenticated={authenticated} //Is Privy User Authenticated?
+                      linkedWallet={linkedWallet} //Privy External Wallet Connection
+                      embeddedWallet={embeddedWallet} //Privy Embedded Wallet Connection
                       setMobileNav={setMobileNav}
                       connectedWallet={connectedWallet}
                       selected={selected}
@@ -183,6 +305,16 @@ const home = () => {
 
                   <div className="w-full z-40 fixed">
                     <Navbar
+                      setJsx={setJsx}
+                      setSelected={setSelected}
+                      setNewsObject={setNewsObject}
+                      selected={selected}
+                      ready={ready}
+                      linkedWallet={linkedWallet}
+                      embeddedWallet={embeddedWallet}
+                      authenticated={authenticated} //Privy Authenticated
+                      login={login} //Privy Login
+                      logout={logout} //Privy Logout
                       getProposalsFunc={getProposalsFunc}
                       connectedWallet={connectedWallet}
                       setConnectedWallet={setConnectedWallet}
@@ -201,14 +333,17 @@ const home = () => {
                  flex-row">
                     {/* Menu Bar */}
                     <Sidebar
-                      connectedWallet={connectedWallet}
+                      authenticated={authenticated} //Is Privy User Authenticated?
+                      linkedWallet={linkedWallet} //Privy External Wallet Connection
+                      embeddedWallet={embeddedWallet} //Privy Embedded Wallet Connection
+                      connectedWallet={connectedWallet} //Legacy Wallet Connection
                       selected={selected}
                       setSelected={setSelected}
                       jsx={jsx}
                     />
                   </div>
 
-                  <div className="flex-1 bg-[#090d18] bg-opacity-0 flex-grow flex flex-col map-container overflow-x-hidden mt-[60px] sm:mt-[80px]">
+                  <div className=" flex-1 bg-[#090d18] bg-opacity-0 flex-grow flex flex-col map-container overflow-x-hidden mt-[60px] sm:mt-[80px]">
                     {/* Viewport (Route Pages Here) */}
                     {jsx}
                   </div>
@@ -217,7 +352,7 @@ const home = () => {
             </ProposalContext.Provider>
           </VoterContext.Provider>
         </BlockchainContext.Provider>
-      </PrivyProviderB>
+      </PrivyContext.Provider>
     </>
   );
 };

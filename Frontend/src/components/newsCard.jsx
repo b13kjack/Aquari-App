@@ -1,7 +1,7 @@
 import React from "react";
 import Cleanup from "../assets/pep.jpg";
 
-const newsCard = ({ setSelected, item, setNewsObject }) => {
+const newsCard = ({ setSelected, item, setNewsObject, selected }) => {
   return (
     <div
       onClick={() => {
@@ -19,6 +19,7 @@ const newsCard = ({ setSelected, item, setNewsObject }) => {
           date: item.date,
           article_text: item.article_text,
         });
+
         setSelected("HomeArticle");
       }}
       className="select-none grow hover:cursor-pointer space-x-0.5 h-[250px] shadowz w-[300px] bg-[#1d1f31] bg-opacity-80 rounded-lg border-[1px] border-[#1d1f31] transition-transform hover:scale-[103%] duration-300">

@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 
+//Import Privy Wallet Provider
+import PrivyProviderB from "./providers/PrivyProviderB.jsx";
+
 //Import Pages
 import Home from "./pages/home";
 import Modal from "./components/warningModal";
@@ -15,7 +18,9 @@ function App() {
   return (
     <>
       <div className="map-container">
-        <Home />
+        <PrivyProviderB>
+          <Home />
+        </PrivyProviderB>
       </div>
     </>
   );

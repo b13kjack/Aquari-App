@@ -14,8 +14,8 @@ import Chart from "../components/tradingChart";
 
 const forum = () => {
   return (
-    <div className="bg-[#090d18] h-full rounded-2xl rounded-b-none rounded-r-none p-8">
-      <div className="flex flex-row gap-x-8">Forum Coming Soon</div>
+    <div className="bg-[#000000] bg-opacity-40 h-full rounded-2xl rounded-b-none rounded-r-none p-8">
+      <div className="flex flex-row gap-x-8">Aquari Forums Coming Soon</div>
 
       <div className="flex flex-row absolute bottom-0 right-0 gap-3 p-5 border-[#4e5467] hide-on-height hide-on-width">
         <div className="bg-[#232734] hover:bg-[#34394d] p-[9px] rounded-md transition duration-300 ease-in-out cursor-pointer">

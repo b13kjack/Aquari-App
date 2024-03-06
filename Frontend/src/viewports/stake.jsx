@@ -14,11 +14,9 @@ import Chart from "../components/tradingChart";
 
 const stake = () => {
   return (
-    <div className="bg-[#000000] bg-opacity-40 overflow-y-auto overflow-x-hidden  rounded-2xl gap-y-4 rounded-b-none rounded-r-none p-8">
+    <div className="bg-[#000000] full-height bg-opacity-40 overflow-y-auto overflow-x-hidden  rounded-2xl gap-y-4 rounded-b-none rounded-r-none p-8">
       <div className="flex flex-col md:flex-row gap-x-8 gap-y-4"></div>
-      <Widget />
-      <Widget />
-      <Widget />
+      <p>Aquari V2 Staking Coming Soon</p>
       <div className="flex flex-row absolute bottom-0 right-0 gap-3 p-5 border-[#4e5467] hide-on-height hide-on-width">
         <div className="bg-[#232734] hover:bg-[#34394d] p-[9px] rounded-md transition duration-300 ease-in-out cursor-pointer">
           <BsTwitterX

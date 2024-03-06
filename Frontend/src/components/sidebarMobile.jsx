@@ -17,7 +17,7 @@ import { AiOutlineDollarCircle } from "react-icons/ai";
 //Import Images
 import Maciej from "../assets/maciej.jpeg";
 
-const sidebar = ({ setMobileNav, selected, setSelected, jsx, connectedWallet }) => {
+const sidebar = ({ setMobileNav, selected, setSelected, embeddedWallet, linkedWallet, authenticated, jsx, connectedWallet }) => {
   const menuItems = [
     {
       name: "Home",
@@ -163,7 +163,11 @@ const sidebar = ({ setMobileNav, selected, setSelected, jsx, connectedWallet }) 
             className="rounded-full h-[45px]"
             src={Maciej}
           />
-          <p className="text-white font-bold">{connectedWallet ? connectedWallet.slice(0, 21) : "Disconnected"}</p>
+          <div className="flex-col">
+            <p className={!authenticated ? "text-white font-bold" : "hidden"}>Disconnected</p>
+            <p className={embeddedWallet && authenticated ? "text-white font-bold" : "hidden"}>{embeddedWallet && authenticated ? embeddedWallet.address.slice(0, 21) : "Disconnected"}</p>
+            <p className={authenticated && linkedWallet ? "text-white font-bold opacity-100" : "hidden"}>{linkedWallet && authenticated ? linkedWallet.address.slice(0, 21) : "Disconnected"}</p>
+          </div>
         </div>
 
         <div className="border-[#4e5467]  border-b-2"></div>
